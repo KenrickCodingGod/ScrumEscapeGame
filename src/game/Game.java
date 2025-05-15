@@ -10,6 +10,12 @@ public class Game {
 
     public Game() {
         speler = db.laadVoortgang(); // voortgang laden
+
+        // ➕ Observer listeners toevoegen (voor Observer Pattern)
+        speler.voegObserverToe(new StatusDisplay());
+        speler.voegObserverToe(new MonsterLogger());
+        speler.voegObserverToe(new DeurController());
+
         kamers.add(new KamerPlanning());
         kamers.add(new KamerDaily());
         kamers.add(new KamerBoard());
@@ -31,6 +37,12 @@ public class Game {
             } else if (input.equals("reset")) {
                 db.resetVoortgang();
                 speler = new Speler();
+
+                // voeg opnieuw observers toe na reset
+                speler.voegObserverToe(new StatusDisplay());
+                speler.voegObserverToe(new MonsterLogger());
+                speler.voegObserverToe(new DeurController());
+
                 System.out.println("🔁 Spel is opnieuw gestart.");
             } else if (input.startsWith("ga naar kamer")) {
                 try {
