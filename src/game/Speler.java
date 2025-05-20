@@ -35,7 +35,7 @@ public class Speler {
                 .collect(Collectors.joining(", "));
     }
 
-    // 🔔 Observer functionaliteit
+    // Observer functionaliteit
     public void voegObserverToe(SpelerObserver observer) {
         observers.add(observer);
     }
