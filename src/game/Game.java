@@ -11,7 +11,7 @@ public class Game {
     public Game() {
         speler = db.laadVoortgang(); // voortgang laden
 
-        // ➕ Observer listeners toevoegen (voor Observer Pattern)
+        
         speler.voegObserverToe(new StatusDisplay());
         speler.voegObserverToe(new MonsterLogger());
         speler.voegObserverToe(new DeurController());
