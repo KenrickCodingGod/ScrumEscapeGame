@@ -1,5 +1,6 @@
 package game;
 
+import game.voorwerp.Voorwerp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,4 +46,20 @@ public class Speler {
             o.update(this);
         }
     }
+
+    private final List<Voorwerp> voorwerpen = new ArrayList<>();
+
+    public void voegVoorwerpToe(Voorwerp v) {
+        voorwerpen.add(v);
+    }
+
+    public List<Voorwerp> getVoorwerpen() {
+        return voorwerpen;
+    }
+
+    public boolean heeftVoorwerp(String naam) {
+        return voorwerpen.stream().anyMatch(v -> v.getNaam().equalsIgnoreCase(naam));
+    }
+
+
 }

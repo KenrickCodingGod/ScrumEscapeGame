@@ -1,4 +1,4 @@
-package game;
+package game.kamer;
 
 import java.util.Scanner;
 

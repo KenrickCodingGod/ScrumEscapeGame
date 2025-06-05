@@ -1,9 +1,13 @@
-package game;
+package game.kamer;
+
+import game.hint.HelpHint;
+import game.hint.FunnyHint;
+import game.hint.Hint;
 
 import java.util.Scanner;
 
 public class KamerPlanning extends Kamer {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public KamerPlanning() {
         super("Sprint Planning");
@@ -18,13 +22,18 @@ public class KamerPlanning extends Kamer {
         System.out.print("> ");
 
         String antwoord = scanner.nextLine().trim().toLowerCase();
+
         if (antwoord.equals("b")) {
             System.out.println("✅ Goed! Je mag door.");
             return true;
         } else {
-            System.out.println("❌ Fout! Je hebt het monster 'Scope Creep' opgeroepen!");
+            System.out.println("❌ Fout antwoord!");
+
+            // Random hint tonen
+            Hint hint = new java.util.Random().nextBoolean() ? new HelpHint() : new FunnyHint();
+            System.out.println(hint.getHint());
+
             return false;
         }
     }
 }
-

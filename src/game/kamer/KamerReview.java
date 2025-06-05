@@ -1,4 +1,7 @@
-package game;
+package game.kamer;
+
+import game.vraag.MeerkeuzeVraag;
+import game.vraag.Vraag;
 
 public class KamerReview extends Kamer {
     private Vraag vraag;

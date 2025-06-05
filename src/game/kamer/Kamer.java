@@ -1,4 +1,4 @@
-package game;
+package game.kamer;
 
 public abstract class Kamer {
     public String naam;
