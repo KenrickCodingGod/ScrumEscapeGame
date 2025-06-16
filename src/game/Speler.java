@@ -1,5 +1,6 @@
 package game;
 
+import game.joker.Joker;
 import game.observer.SpelerObserver;
 import game.voorwerp.Voorwerp;
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ public class Speler {
     private int positie = 0;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<SpelerObserver> observers = new ArrayList<>();
+    private Joker gekozenJoker;
+    private boolean jokerGebruikt = false;
+
 
     public int getPositie() {
         return positie;
@@ -35,6 +39,27 @@ public class Speler {
         return monsters.stream()
                 .map(Monster::getNaam)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void kiesJoker(Joker joker) {
+        this.gekozenJoker = joker;
+    }
+
+    public boolean heeftJoker() {
+        return gekozenJoker != null && !jokerGebruikt;
+    }
+
+    public void gebruikJoker(int kamerNummer) {
+        if (heeftJoker() && gekozenJoker.magGebruikenInKamer(kamerNummer)) {
+            gekozenJoker.gebruik();
+            jokerGebruikt = true;
+        } else {
+            System.out.println("Je kunt deze joker hier niet gebruiken of hebt hem al gebruikt.");
+        }
+    }
+
+    public Joker getGekozenJoker() {
+        return gekozenJoker;
     }
 
     // Observer functionaliteit

@@ -1,5 +1,8 @@
 package game;
 
+import game.joker.HintJoker;
+import game.joker.KeyJoker;
+import java.util.Scanner;
 import game.hint.FunnyHint;
 import game.hint.HelpHint;
 import game.hint.Hint;
@@ -64,8 +67,14 @@ public class Game {
     }
 
     public void start() {
+        Speler speler = new Speler();
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("🏢 Welkom bij Scrum Escape!");
-        System.out.println("Typ 'status', 'reset' of 'ga naar kamer X'");
+        System.out.println("Kies je joker:");
+        System.out.println("1. HintJoker (bruikbaar in alle kamers)");
+        System.out.println("2. KeyJoker (bruikbaar in kamer 2 en 4)");
+        System.out.println("Maak een keuze (1 of 2): vervolgens Typ 'status', 'reset' of 'ga naar kamer X'");
 
         while (speler.getPositie() < kamers.size()) {
             System.out.print(">> ");
@@ -78,7 +87,15 @@ public class Game {
                 speler = new Speler();
                 speler.voegObserverToe(new GameStatusObserver());
                 System.out.println("🔁 Spel is opnieuw gestart.");
-            } else if (input.startsWith("ga naar kamer")) {
+            }
+            else if (input.equals("1")) {
+                speler.kiesJoker(new HintJoker());
+                System.out.println("Je hebt gekozen voor de HintJoker.");
+            } else if (input.equals("2")) {
+                speler.kiesJoker(new KeyJoker());
+                System.out.println("Je hebt gekozen voor de KeyJoker.");
+            }
+            else if (input.startsWith("ga naar kamer")) {
                 try {
                     int kamerNr = Integer.parseInt(input.replaceAll("\\D+", ""));
                     if (kamerNr - 1 == speler.getPositie()) {
