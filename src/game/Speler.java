@@ -1,5 +1,6 @@
 package game;
 
+import game.observer.SpelerObserver;
 import game.voorwerp.Voorwerp;
 import java.util.ArrayList;
 import java.util.List;

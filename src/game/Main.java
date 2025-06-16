@@ -1,14 +1,8 @@
-package game.voorwerp;
+package game;
 
-public class KamerInfoBoek implements Voorwerp {
-    private final String info;
-
-    public KamerInfoBoek(String info) {
-        this.info = info;
-    }
-
-    @Override
-    public void gebruik() {
-        System.out.println("📘 Kamerinformatie: " + info);
+public class Main {
+    public static void main(String[] args) {
+        Game spel = new Game();
+        spel.start();
     }
 }
