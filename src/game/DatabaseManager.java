@@ -6,8 +6,8 @@ import java.util.List;
 
 public class DatabaseManager {
     private static final String URL = "jdbc:mysql://localhost:3306/scrum_escape";
-    private static final String USER = "root"; // ✏️ Pas aan als nodig
-    private static final String PASSWORD = "kenrick"; // ✏️ Pas aan als nodig
+    private static final String USER = "root"; 
+    private static final String PASSWORD = "kenrick"; 
 
     public DatabaseManager() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -28,7 +28,7 @@ public class DatabaseManager {
     }
 
     public void slaVoortgangOp(int positie, List<Monster> monsters) {
-        // Monsterlijst opslaan als string (alleen namen)
+    
         String monstersStr = monsters.stream()
                 .map(Monster::getNaam)
                 .reduce((a, b) -> a + "," + b)
@@ -84,7 +84,7 @@ public class DatabaseManager {
         }
     }
 
-    // Herbouw Monster op basis van naam (minimale beschrijving)
+
     private Monster maakMonsterOpNaam(String naam) {
         return switch (naam) {
             case "Scope Creep" -> new Monster("Scope Creep", "Te veel werk zonder afstemming toegevoegd.");
