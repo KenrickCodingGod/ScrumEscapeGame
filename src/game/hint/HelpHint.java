@@ -7,8 +7,7 @@ public class HelpHint implements Hint {
         this.inhoud = inhoud;
     }
 
-    @Override
     public String geefHint() {
-        return "💡 Hint: " + inhoud;
+        return inhoud;
     }
 }

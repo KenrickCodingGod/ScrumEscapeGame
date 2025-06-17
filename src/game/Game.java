@@ -14,6 +14,8 @@ import game.observer.GameStatusObserver;
 import game.vraag.InvulVraag;
 import game.vraag.MeerkeuzeVraag;
 import game.voorwerp.StandaardVoorwerp;
+import game.hint.HintFactory;
+import game.hint.HintProvider;
 
 import java.util.*;
 
@@ -120,11 +122,27 @@ public class Game {
                             speler.voegMonsterToe(monster);
                             db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
 
-                            // 🧠 Hint automatisch na fout
-                            Hint automatischeHint = new Random().nextBoolean()
-                                    ? new HelpHint("Tip: Herlees goed wat de vraag vraagt.")
-                                    : new FunnyHint();
-                            System.out.println("💡 Hint: " + automatischeHint.geefHint());
+                            System.out.println("❓ Wil je een hint? (j/n)");
+                            String hintKeuze = scanner.nextLine().toLowerCase();
+
+                            if (hintKeuze.equals("j")) {
+                                String inhoudelijkeHint = switch (huidigeKamer.getNaam()) {
+                                    case "Sprint Planning" -> "HelpHint: Denk aan wat vaak als laatste wordt getest bij softwareontwikkeling.";
+                                    case "Daily Scrum" -> "HelpHint: Wat bespreek je dagelijks met je team?";
+                                    case "Scrum Board" -> "HelpHint: Een agenda van de PO hoort niet op een Scrum Board.";
+                                    case "Sprint Review" -> "HelpHint: Wat laat je aan de stakeholders zien?";
+                                    case "Sprint Retrospective" -> "HelpHint: Denk aan feedbackmomenten en leren van fouten.";
+                                    case "Finale TIA Kamer" -> "HelpHint: TIA is een afkorting. Wat betekenen de letters?";
+                                    default -> "HelpHint: Gebruik je Scrum-kennis goed!";
+                                };
+
+                                HintFactory hintFactory = new HintFactory();
+                                HintProvider provider = hintFactory.getRandomProvider(inhoudelijkeHint);
+                                Hint hint = provider.geefHint();
+                                System.out.println(hint.geefHint());
+                            }
+
+
 
                             // 🔨 Vraag om voorwerp
                             System.out.println("❓ Wil je het voorwerp '" + huidigeKamer.getVoorwerp().getNaam() +
@@ -135,20 +153,14 @@ public class Game {
                                 huidigeKamer.getVoorwerp().gebruik(monster);
                                 System.out.println("✅ Monster verslagen. Je mag de vraag opnieuw beantwoorden.");
 
-                                // ⏩ Tweede kans: speler mag opnieuw proberen (nu mét optionele hint)
-                                System.out.println("Wil je een extra hint? Typ 'hint' of druk op Enter:");
-                                String extraKeuze = scanner.nextLine().toLowerCase();
-                                if (extraKeuze.equals("hint")) {
-                                    Hint extraHint = new Random().nextBoolean()
-                                            ? new HelpHint("Let op de Scrum-regels die je hebt geleerd.")
-                                            : new FunnyHint();
-                                    System.out.println("💡 Extra hint: " + extraHint.geefHint());
-                                }
+
 
                                 boolean opnieuwJuist = huidigeKamer.voerUit(speler);
                                 if (opnieuwJuist) {
+                                    System.out.println("Goed!!! je kunt nu naar de volgende kamer.");
                                     speler.setPositie(speler.getPositie() + 1);
                                     db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
+
                                 }
                             }
                             else {

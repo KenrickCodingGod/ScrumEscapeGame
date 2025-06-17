@@ -4,11 +4,11 @@ import java.util.Random;
 
 public class FunnyHint implements Hint {
     private static final String[] grappen = {
-            "Scrum is geen dansstijl, al denken sommigen van wel.",
-            "Scrum zonder retrospective is als pizza zonder kaas.",
-            "Daily stand-up is geen karaoke sessie.",
-            "De PO wil graag werkende software... geen PowerPoint.",
-            "Bugs zijn gewoon verborgen features, toch?"
+            "FunnyHint: Scrum is geen dansstijl, al denken sommigen van wel.",
+            "FunnyHint: Scrum zonder retrospective is als pizza zonder kaas.",
+            "FunnyHint: Daily stand-up is geen karaoke sessie.",
+            "FunnyHint: De PO wil graag werkende software... geen PowerPoint.",
+            "FunnyHint: Bugs zijn gewoon verborgen features, toch?"
     };
 
     @Override
