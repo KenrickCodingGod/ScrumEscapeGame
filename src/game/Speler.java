@@ -17,7 +17,7 @@ public class Speler {
 
     public void setPositie(int positie) {
         this.positie = positie;
-        notifyObservers(); // meld aan observers
+        notifyObservers(); 
     }
 
     public List<Monster> getMonsters() {
@@ -27,7 +27,7 @@ public class Speler {
     public void voegMonsterToe(Monster monster) {
         monsters.add(monster);
         monster.toonMonster();
-        notifyObservers(); // meld wijziging aan observers
+        notifyObservers(); 
     }
 
     public String getMonsterNamenAlsString() {
@@ -37,7 +37,7 @@ public class Speler {
                 .collect(Collectors.joining(", "));
     }
 
-    // Observer functionaliteit
+
     public void voegObserverToe(SpelerObserver observer) {
         observers.add(observer);
     }
