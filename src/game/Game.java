@@ -84,27 +84,23 @@ public class Game {
                     if (kamerNr - 1 == speler.getPositie()) {
                         Kamer huidigeKamer = kamers.get(speler.getPositie());
 
-                        // 👇 Eerst normaal de vraag stellen
                         boolean correct = huidigeKamer.voerUit();
 
                         if (correct) {
                             speler.setPositie(speler.getPositie() + 1);
                             db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
                         } else {
-                            // ❌ Fout → monster en hint automatisch
                             Monster monster = bepaalMonsterVoorKamer(huidigeKamer.getNaam());
                             speler.voegMonsterToe(monster);
                             db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
 
                             System.out.println("🧌 Monster opgeroepen: " + monster.getNaam());
 
-                            // 🧠 Hint automatisch na fout
                             Hint automatischeHint = new Random().nextBoolean()
                                     ? new HelpHint("Tip: Herlees goed wat de vraag vraagt.")
                                     : new FunnyHint();
                             System.out.println("💡 Hint: " + automatischeHint.geefHint());
 
-                            // 🔨 Vraag om voorwerp
                             System.out.println("❓ Wil je het voorwerp '" + huidigeKamer.getVoorwerp().getNaam() +
                                     "' gebruiken om het monster te verslaan? (j/n)");
                             String keuze = scanner.nextLine().toLowerCase();
@@ -113,7 +109,6 @@ public class Game {
                                 huidigeKamer.getVoorwerp().gebruik(monster);
                                 System.out.println("✅ Monster verslagen. Je mag de vraag opnieuw beantwoorden.");
 
-                                // ⏩ Tweede kans: speler mag opnieuw proberen (nu mét optionele hint)
                                 System.out.println("Wil je een extra hint? Typ 'hint' of druk op Enter:");
                                 String extraKeuze = scanner.nextLine().toLowerCase();
                                 if (extraKeuze.equals("hint")) {
