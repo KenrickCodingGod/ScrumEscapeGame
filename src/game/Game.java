@@ -2,6 +2,8 @@ package game;
 
 import game.joker.HintJoker;
 import game.joker.KeyJoker;
+
+import java.security.Key;
 import java.util.Scanner;
 import game.hint.FunnyHint;
 import game.hint.HelpHint;
@@ -27,7 +29,7 @@ public class Game {
 
         kamers.add(new Kamer(
                 "Sprint Planning",
-                new InvulVraag("Noem één taak die past binnen een sprint van 2 weken.", "testen"),
+                new InvulVraag("Wat is meestal het laatste op de planning als het gaat om coderen?", "testen"),
                 new StandaardVoorwerp("ScrumChart", "Je bekijkt het Scrum Chart voor overzicht.")
         ));
 
@@ -72,13 +74,15 @@ public class Game {
 
         System.out.println("🏢 Welkom bij Scrum Escape!");
         System.out.println("Kies je joker:");
-        System.out.println("1. HintJoker (bruikbaar in alle kamers)");
-        System.out.println("2. KeyJoker (bruikbaar in kamer 2 en 4)");
+        System.out.println("1. HintJoker (bruikbaar in alle kamers) *gebruik je door 'hintjoker' te typen*");
+        System.out.println("2. KeyJoker (bruikbaar in kamer 2 en 4) *gebruik je door 'keyjoker' te typen*");
         System.out.println("Maak een keuze (1 of 2): vervolgens Typ 'status', 'reset' of 'ga naar kamer X'");
 
         while (speler.getPositie() < kamers.size()) {
             System.out.print(">> ");
             String input = scanner.nextLine().toLowerCase();
+
+
 
             if (input.equals("status")) {
                 toonStatus();
@@ -94,26 +98,27 @@ public class Game {
             } else if (input.equals("2")) {
                 speler.kiesJoker(new KeyJoker());
                 System.out.println("Je hebt gekozen voor de KeyJoker.");
-            }
+            } else if (input.equals("joker")) {
+                speler.gebruikJoker(speler.getPositie());}
             else if (input.startsWith("ga naar kamer")) {
                 try {
                     int kamerNr = Integer.parseInt(input.replaceAll("\\D+", ""));
                     if (kamerNr - 1 == speler.getPositie()) {
                         Kamer huidigeKamer = kamers.get(speler.getPositie());
 
-                        // 👇 Eerst normaal de vraag stellen
-                        boolean correct = huidigeKamer.voerUit();
+                        //  Eerst normaal de vraag stellen
+                        boolean correct = huidigeKamer.voerUit(speler);
+
 
                         if (correct) {
+                            System.out.println("Goed!!! je kunt nu naar de volgende kamer.");
                             speler.setPositie(speler.getPositie() + 1);
                             db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
                         } else {
-                            // ❌ Fout → monster en hint automatisch
+                            // Fout → monster en hint automatisch
                             Monster monster = bepaalMonsterVoorKamer(huidigeKamer.getNaam());
                             speler.voegMonsterToe(monster);
                             db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
-
-                            System.out.println("🧌 Monster opgeroepen: " + monster.getNaam());
 
                             // 🧠 Hint automatisch na fout
                             Hint automatischeHint = new Random().nextBoolean()
@@ -140,12 +145,13 @@ public class Game {
                                     System.out.println("💡 Extra hint: " + extraHint.geefHint());
                                 }
 
-                                boolean opnieuwJuist = huidigeKamer.voerUit();
+                                boolean opnieuwJuist = huidigeKamer.voerUit(speler);
                                 if (opnieuwJuist) {
                                     speler.setPositie(speler.getPositie() + 1);
                                     db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
                                 }
-                            } else {
+                            }
+                            else {
                                 System.out.println("⚠️ Je hebt het monster niet verslagen. Probeer later opnieuw.");
                             }
                         }

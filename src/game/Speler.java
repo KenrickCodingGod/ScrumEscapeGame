@@ -51,7 +51,7 @@ public class Speler {
 
     public void gebruikJoker(int kamerNummer) {
         if (heeftJoker() && gekozenJoker.magGebruikenInKamer(kamerNummer)) {
-            gekozenJoker.gebruik();
+            gekozenJoker.gebruikInKamer(kamerNummer);
             jokerGebruikt = true;
         } else {
             System.out.println("Je kunt deze joker hier niet gebruiken of hebt hem al gebruikt.");

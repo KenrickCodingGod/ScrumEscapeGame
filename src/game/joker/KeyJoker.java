@@ -1,5 +1,6 @@
 package game.joker;
 
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,15 +10,22 @@ public class KeyJoker implements Joker {
 
     @Override
     public void gebruik() {
-        if (!gebruikt) {
-            System.out.println("Je bent automatisch door deze kamer heen!");
+        if (gebruikt) {
+            System.out.println("❌ Je hebt deze joker al gebruikt.");
+        } else {
             gebruikt = true;
         }
     }
 
+
+    @Override
+    public void gebruikInKamer(int kamerNummer) {
+
+    }
+
     @Override
     public boolean magGebruikenInKamer(int kamerNummer) {
-        return !gebruikt && geldigeKamers.contains(kamerNummer);
+        return !gebruikt && (kamerNummer == 1 || kamerNummer == 3);
     }
 
     @Override

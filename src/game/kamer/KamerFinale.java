@@ -1,5 +1,6 @@
 package game.kamer;
 
+import game.Speler;
 import game.vraag.InvulVraag;
 import game.vraag.Vraag;
 import game.voorwerp.StandaardVoorwerp;
@@ -25,8 +26,8 @@ public class KamerFinale extends Kamer {
     }
 
     @Override
-    public boolean voerUit() {
-        boolean juist = vraag.stelVraag();
+    public boolean voerUit(Speler speler) {
+        boolean juist = vraag.stelVraag(speler);
         if (juist) {
             System.out.println("✅ Geweldig! Je hebt het Scrum Escape Game gewonnen!");
             System.out.println("✔️ TIA = Transparantie, Inspectie en Aanpassing.");

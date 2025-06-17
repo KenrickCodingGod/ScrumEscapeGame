@@ -5,14 +5,10 @@ import game.Speler;
 public class GameStatusObserver implements SpelerObserver {
     @Override
     public void update(Speler speler) {
-        System.out.println("📍 Positie: " + speler.getPositie());
-        System.out.println("🧌 Monsters: " + speler.getMonsterNamenAlsString());
+        System.out.println("📍 Je bent nu in kamer: " + speler.getPositie());
+        System.out.println("🧟‍♂️ Monster: " + speler.getMonsters().get(speler.getMonsters().size() - 1).getNaam());
 
-        if (!speler.getMonsters().isEmpty()) {
-            System.out.println("🧌 Laatste monster: " +
-                    speler.getMonsters().get(speler.getMonsters().size() - 1).getNaam());
-        }
 
-        System.out.println("🚪 Deur naar kamer: " + (speler.getPositie() + 1));
+        System.out.println("🚪 Je hebt toegang tot kamer: " + (speler.getPositie() + 1));
     }
 }

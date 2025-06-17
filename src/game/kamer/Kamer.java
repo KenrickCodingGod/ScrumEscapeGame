@@ -1,5 +1,6 @@
 package game.kamer;
 
+import game.Speler;
 import game.vraag.Vraag;
 import game.voorwerp.Voorwerp;
 
@@ -16,9 +17,9 @@ public class Kamer {
         this.voorwerp = voorwerp;
     }
 
-    public boolean voerUit() {
+    public boolean voerUit(Speler speler) {
         System.out.println("Je bent in de kamer: " + naam);
-        return vraag.stelVraag();
+        return vraag.stelVraag(speler);
     }
 
     public String getNaam() {
