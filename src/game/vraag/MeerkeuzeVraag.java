@@ -1,6 +1,10 @@
 package game.vraag;
 
 import game.Speler;
+import game.assistent.Assistent;
+import game.assistent.HintAssistent;
+import game.assistent.Motivator;
+import game.assistent.StappenplanHulpmiddel;
 import game.joker.KeyJoker;
 
 import java.util.Scanner;
@@ -25,6 +29,23 @@ public class MeerkeuzeVraag implements Vraag {
         }
         System.out.print("> ");
         String antwoord = scanner.nextLine().trim().toLowerCase();
+
+        if (antwoord.equals("gebruik assistent")) {
+            if (speler.getPositie() == 0 || speler.getPositie() == 2) { // kamer 1 of 3 (positie 0 of 2)
+                Assistent assistent = new Assistent(
+                        new HintAssistent(speler.getPositie()),
+                        new StappenplanHulpmiddel(),
+                        new Motivator()
+                );
+                assistent.activeer();
+                antwoord = scanner.nextLine().trim().toLowerCase();
+                return antwoord.equals(juistAntwoord);
+            } else {
+                System.out.println("❌ Assistent is niet beschikbaar in deze kamer.");
+                antwoord = scanner.nextLine().trim().toLowerCase();
+                return antwoord.equals(juistAntwoord);
+            }
+        }
 
         if (antwoord.equals("keyjoker")) {
             if (speler.heeftJoker() && speler.getGekozenJoker() instanceof KeyJoker keyJoker) {

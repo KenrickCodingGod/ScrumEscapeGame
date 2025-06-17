@@ -1,5 +1,9 @@
 package game;
 
+import game.assistent.Assistent;
+import game.assistent.HintAssistent;
+import game.assistent.Motivator;
+import game.assistent.StappenplanHulpmiddel;
 import game.joker.HintJoker;
 import game.joker.KeyJoker;
 
@@ -95,7 +99,20 @@ public class Game {
             else if (input.equals("1")) {
                 speler.kiesJoker(new HintJoker());
                 System.out.println("Je hebt gekozen voor de HintJoker.");
-            } else if (input.equals("2")) {
+            } else if (input.equals("gebruik assistent")) {
+                if (speler.getPositie() == 0 || speler.getPositie() == 2) { // bijv. kamer 1 en 3
+                    Assistent assistent = new Assistent(
+                            new HintAssistent(speler.getPositie()),
+                            new StappenplanHulpmiddel(),
+                            new Motivator()
+                    );
+                    assistent.activeer();
+                } else {
+                    System.out.println("❌ In deze kamer is geen assistent beschikbaar.");
+                }
+            }
+
+            else if (input.equals("2")) {
                 speler.kiesJoker(new KeyJoker());
                 System.out.println("Je hebt gekozen voor de KeyJoker.");
             } else if (input.equals("joker")) {
