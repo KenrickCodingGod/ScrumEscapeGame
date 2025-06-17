@@ -1,8 +1,14 @@
 package game.hint;
 
-public class HelpHint extends Hint {
+public class HelpHint implements Hint {
+    private final String inhoud;
+
+    public HelpHint(String inhoud) {
+        this.inhoud = inhoud;
+    }
+
     @Override
-    public String getHint() {
-        return "💡 Tip: Denk aan de juiste scrum-stap die bij deze kamer hoort.";
+    public String geefHint() {
+        return "💡 Hint: " + inhoud;
     }
 }
