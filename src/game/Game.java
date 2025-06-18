@@ -78,9 +78,10 @@ public class Game {
 
         System.out.println("🏢 Welkom bij Scrum Escape!");
         System.out.println("Kies je joker:");
+        System.out.println("Je hebt ook toegang tot een Hulpassistent in kamer 1 en 3 door 'gebruik assistent' te typen.");
         System.out.println("1. HintJoker (bruikbaar in alle kamers) *gebruik je door 'hintjoker' te typen*");
         System.out.println("2. KeyJoker (bruikbaar in kamer 2 en 4) *gebruik je door 'keyjoker' te typen*");
-        System.out.println("Maak een keuze (1 of 2): vervolgens Typ 'status', 'reset' of 'ga naar kamer X'");
+        System.out.println("Maak een keuze (1 of 2): vervolgens Typ 'status', 'reset' of 'ga naar kamer X'.");
 
         while (speler.getPositie() < kamers.size()) {
             System.out.print(">> ");
