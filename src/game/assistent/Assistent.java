@@ -1,7 +1,5 @@
 package game.assistent;
 
-import game.hint.Hint;
-
 public class Assistent {
     private final HintAssistent hint;
     private final EducatiefHulpmiddel hulpmiddel;

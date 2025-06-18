@@ -3,7 +3,6 @@ package game.vraag;
 
 import game.Speler;
 import game.assistent.*;
-import game.joker.Joker;
 import game.joker.KeyJoker;
 
 import java.util.Scanner;
