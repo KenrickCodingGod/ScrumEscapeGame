@@ -1,7 +1,16 @@
 package game;
+
+import game.assistent.Assistent;
+import game.assistent.HintAssistent;
+import game.assistent.Motivator;
+import game.assistent.StappenplanHulpmiddel;
 import game.joker.HintJoker;
 import game.joker.KeyJoker;
+
+import java.security.Key;
 import java.util.Scanner;
+import game.hint.FunnyHint;
+import game.hint.HelpHint;
 import game.hint.Hint;
 import game.kamer.Kamer;
 import game.kamer.KamerFinale;
@@ -16,6 +25,7 @@ import java.util.*;
 
 public class Game {
     private final List<Kamer> kamers = new ArrayList<>();
+    private final Scanner scanner = new Scanner(System.in);
     private final DatabaseManager db = new DatabaseManager();
     private Speler speler;
 
@@ -72,9 +82,10 @@ public class Game {
 
         System.out.println("🏢 Welkom bij Scrum Escape!");
         System.out.println("Kies je joker:");
+        System.out.println("Je hebt ook toegang tot een Hulpassistent in kamer 1 en 3 door 'gebruik assistent' te typen.");
         System.out.println("1. HintJoker (bruikbaar in alle kamers) *gebruik je door 'hintjoker' te typen*");
         System.out.println("2. KeyJoker (bruikbaar in kamer 2 en 4) *gebruik je door 'keyjoker' te typen*");
-        System.out.println("Maak een keuze (1 of 2): vervolgens Typ 'status', 'reset' of 'ga naar kamer X'");
+        System.out.println("Maak een keuze (1 of 2): vervolgens Typ 'status', 'reset' of 'ga naar kamer X'.");
 
         while (speler.getPositie() < kamers.size()) {
             System.out.print(">> ");
@@ -93,7 +104,20 @@ public class Game {
             else if (input.equals("1")) {
                 speler.kiesJoker(new HintJoker());
                 System.out.println("Je hebt gekozen voor de HintJoker.");
-            } else if (input.equals("2")) {
+            } else if (input.equals("gebruik assistent")) {
+                if (speler.getPositie() == 0 || speler.getPositie() == 2) { // bijv. kamer 1 en 3
+                    Assistent assistent = new Assistent(
+                            new HintAssistent(speler.getPositie()),
+                            new StappenplanHulpmiddel(),
+                            new Motivator()
+                    );
+                    assistent.activeer();
+                } else {
+                    System.out.println("❌ In deze kamer is geen assistent beschikbaar.");
+                }
+            }
+
+            else if (input.equals("2")) {
                 speler.kiesJoker(new KeyJoker());
                 System.out.println("Je hebt gekozen voor de KeyJoker.");
             } else if (input.equals("joker")) {
@@ -175,6 +199,8 @@ public class Game {
                 System.out.println("❓ Onbekend commando.");
             }
         }
+
+        System.out.println("🎉 Je hebt alle kamers doorlopen!");
     }
 
 
