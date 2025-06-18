@@ -1,12 +1,7 @@
 package game;
-
 import game.joker.HintJoker;
 import game.joker.KeyJoker;
-
-import java.security.Key;
 import java.util.Scanner;
-import game.hint.FunnyHint;
-import game.hint.HelpHint;
 import game.hint.Hint;
 import game.kamer.Kamer;
 import game.kamer.KamerFinale;
@@ -21,7 +16,6 @@ import java.util.*;
 
 public class Game {
     private final List<Kamer> kamers = new ArrayList<>();
-    private final Scanner scanner = new Scanner(System.in);
     private final DatabaseManager db = new DatabaseManager();
     private Speler speler;
 
@@ -32,13 +26,13 @@ public class Game {
         kamers.add(new Kamer(
                 "Sprint Planning",
                 new InvulVraag("Wat is meestal het laatste op de planning als het gaat om coderen?", "testen"),
-                new StandaardVoorwerp("ScrumChart", "Je bekijkt het Scrum Chart voor overzicht.")
+                new StandaardVoorwerp("Diamanten Zwaard", "🗡️ Je doet 10 hartjes damage!")
         ));
 
         kamers.add(new Kamer(
                 "Daily Scrum",
-                new InvulVraag("Wat bespreek je tijdens een Daily Scrum?", "voortgang"),
-                new StandaardVoorwerp("ScrumTimer", "De tijd wordt goed bewaakt.")
+                new InvulVraag("Welke mensen zitten er ALTIJD bij de Daily Scrum?", "developers"),
+                new StandaardVoorwerp("All wetende boek", "📖 Je hebt het monster verslagen met je enorme kennis en je hebt geleerd dat het antwoord developers, product owners of scrum master is.")
         ));
 
         kamers.add(new Kamer(
@@ -47,24 +41,25 @@ public class Game {
                         "Wat hoort NIET op een Scrum Board?",
                         new String[]{
                                 "A) Taken en user stories",
-                                "B) De persoonlijke agenda van de PO",
-                                "C) Epics en bugs"
+                                "B) De persoonlijke agenda van de Product Owner",
+                                "C) Epics en bugs",
+                                "D) Review / testen"
                         },
                         "b"
                 ),
-                new StandaardVoorwerp("ScrumMasterWhistle", "Je fluit en herinnert iedereen aan de regels van Scrum!")
+                new StandaardVoorwerp("Excalibur", "🗡️ Je gebruikt de magische krachten van Excalibur om het monster te vernietigen!")
         ));
 
         kamers.add(new Kamer(
                 "Sprint Review",
-                new InvulVraag("Wat toon je tijdens een Sprint Review?", "oplevering"),
-                new StandaardVoorwerp("RetroMirror", "Je reflecteert met de RetroMirror.")
+                new InvulVraag("In welke phase van de Sprint vindt de Sprint Review plaats?", "einde"),
+                new StandaardVoorwerp("Scrum HandBoek", "📖 Het monster kan niet op tegen je HandBoek van trucjes! Je hebt ook geleerd dat er 3 phases zijn ; begin, midden en einde")
         ));
 
         kamers.add(new Kamer(
                 "Sprint Retrospective",
-                new InvulVraag("Wat bespreek je in een Retrospective?", "verbeterpunten"),
-                new StandaardVoorwerp("KamerInfoBoek", "Je leest de uitleg over deze kamer.")
+                new InvulVraag("In een retrospective evalueer je 2 onderdelen, één van deze is 'het process' wat is de andere?", "samenwerking"),
+                new StandaardVoorwerp("Katana", "🗡️ Je slaat het monster doormidden alsof het een fruit is uit Fruit Ninja!")
         ));
 
         kamers.add(new KamerFinale());
@@ -72,6 +67,7 @@ public class Game {
 
     public void start() {
         Speler speler = new Speler();
+        speler.voegObserverToe(new GameStatusObserver());
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("🏢 Welkom bij Scrum Escape!");
@@ -87,7 +83,7 @@ public class Game {
 
 
             if (input.equals("status")) {
-                toonStatus();
+                toonStatus(speler, kamers);
             } else if (input.equals("reset")) {
                 db.resetVoortgang();
                 speler = new Speler();
@@ -108,31 +104,33 @@ public class Game {
                     if (kamerNr - 1 == speler.getPositie()) {
                         Kamer huidigeKamer = kamers.get(speler.getPositie());
 
-                        //  Eerst normaal de vraag stellen
+                        //  eerst normaal de vraag stellen
                         boolean correct = huidigeKamer.voerUit(speler);
 
 
                         if (correct) {
-                            System.out.println("Goed!!! je kunt nu naar de volgende kamer.");
+
+                            if (kamerNr < 6){
+                            System.out.println("Goedzo ga zo door!");}
                             speler.setPositie(speler.getPositie() + 1);
                             db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
                         } else {
-                            // Fout → monster en hint automatisch
+                            // fout monster en hint automatisch
                             Monster monster = bepaalMonsterVoorKamer(huidigeKamer.getNaam());
                             speler.voegMonsterToe(monster);
                             db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
 
-                            System.out.println("❓ Wil je een hint? (j/n)");
+                            System.out.println("❓ Wil je een hint? (ja/nee)");
                             String hintKeuze = scanner.nextLine().toLowerCase();
 
-                            if (hintKeuze.equals("j")) {
+                            if (hintKeuze.equals("ja")) {
                                 String inhoudelijkeHint = switch (huidigeKamer.getNaam()) {
-                                    case "Sprint Planning" -> "HelpHint: Denk aan wat vaak als laatste wordt getest bij softwareontwikkeling.";
-                                    case "Daily Scrum" -> "HelpHint: Wat bespreek je dagelijks met je team?";
-                                    case "Scrum Board" -> "HelpHint: Een agenda van de PO hoort niet op een Scrum Board.";
-                                    case "Sprint Review" -> "HelpHint: Wat laat je aan de stakeholders zien?";
-                                    case "Sprint Retrospective" -> "HelpHint: Denk aan feedbackmomenten en leren van fouten.";
-                                    case "Finale TIA Kamer" -> "HelpHint: TIA is een afkorting. Wat betekenen de letters?";
+                                    case "Sprint Planning" -> "HelpHint: Wat plan je aan het begin van de sprint, maar voer je pas aan het eind uit?";
+                                    case "Daily Scrum" -> "HelpHint: Wie werken er dagelijks(daily) aan de code / project?";
+                                    case "Scrum Board" -> "HelpHint: Denk goed na: is dit een werkbord of een persoonlijke planner?";
+                                    case "Sprint Review" -> "HelpHint: Wanneer toon je het werk aan de stakeholders?";
+                                    case "Sprint Retrospective" -> "HelpHint: Denk aan de situatie binnen de groep";
+                                    case "Finale TIA Kamer" -> "HelpHint: TIA staat voor drie kernwaarden van Scrum. Wat betekenen ze?";
                                     default -> "HelpHint: Gebruik je Scrum-kennis goed!";
                                 };
 
@@ -144,20 +142,20 @@ public class Game {
 
 
 
-                            // 🔨 Vraag om voorwerp
+                            // vraag om voorwerp
                             System.out.println("❓ Wil je het voorwerp '" + huidigeKamer.getVoorwerp().getNaam() +
-                                    "' gebruiken om het monster te verslaan? (j/n)");
+                                    "' gebruiken om het monster te verslaan? (ja/nee)");
                             String keuze = scanner.nextLine().toLowerCase();
 
-                            if (keuze.equals("j")) {
-                                huidigeKamer.getVoorwerp().gebruik(monster);
+                            if (keuze.equals("ja")) {
+                                System.out.println(huidigeKamer.getVoorwerp().gebruik(monster));
                                 System.out.println("✅ Monster verslagen. Je mag de vraag opnieuw beantwoorden.");
 
 
 
                                 boolean opnieuwJuist = huidigeKamer.voerUit(speler);
                                 if (opnieuwJuist) {
-                                    System.out.println("Goed!!! je kunt nu naar de volgende kamer.");
+                                    System.out.println("Goedzo ga zo door!");
                                     speler.setPositie(speler.getPositie() + 1);
                                     db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
 
@@ -177,12 +175,10 @@ public class Game {
                 System.out.println("❓ Onbekend commando.");
             }
         }
-
-        System.out.println("🎉 Je hebt alle kamers doorlopen!");
     }
 
 
-    private void toonStatus() {
+    private void toonStatus(Speler speler, List<Kamer> kamers) {
         System.out.println("\n--- SPELER STATUS ---");
         int index = speler.getPositie();
         System.out.println("Kamer " + (index + 1) + " van " + kamers.size());
@@ -197,14 +193,15 @@ public class Game {
         System.out.println("Actieve monsters: " + speler.getMonsterNamenAlsString());
     }
 
+
     private Monster bepaalMonsterVoorKamer(String kamerNaam) {
         return switch (kamerNaam) {
-            case "Sprint Planning" -> new Monster("Scope Creep", "Te veel werk zonder afstemming toegevoegd.");
-            case "Daily Scrum" -> new Monster("Vertraging", "Je team communiceert niet goed.");
-            case "Scrum Board" -> new Monster("Chaos", "Geen overzicht op de taken.");
-            case "Sprint Review" -> new Monster("Onbegrip", "Stakeholders snappen het resultaat niet.");
-            case "Sprint Retrospective" -> new Monster("Herhaling", "Je leert niet van fouten.");
-            case "Finale TIA Kamer" -> new Monster("ScrumVergeetMonster", "Je bent de kern van Scrum vergeten: TIA.");
+            case "Sprint Planning" -> new Monster("Scopezilla", "Te veel werk zonder afstemming toegevoegd.");
+            case "Daily Scrum" -> new Monster("TeamStilte Zombie", "Je team communiceert niet goed.");
+            case "Scrum Board" -> new Monster("Chaos Tornado", "Geen overzicht op de taken.");
+            case "Sprint Review" -> new Monster("FeedbackFobie", "Stakeholders snappen het resultaat niet.");
+            case "Sprint Retrospective" -> new Monster("LoopSpook", "Je leert niet van fouten.");
+            case "Finale TIA Kamer" -> new Monster("TIAverslinder", "Je bent de kern van Scrum vergeten: TIA.");
             default -> new Monster("Onbekend", "Onbekende fout.");
         };
     }

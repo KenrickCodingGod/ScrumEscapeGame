@@ -41,7 +41,7 @@ public class MeerkeuzeVraag implements Vraag {
             return false; // Beëindig vraag zonder goed antwoord
         }
 
-        if (antwoord.equals("joker")) {
+        if (antwoord.equals("hintjoker")) {
             if (speler.heeftJoker()) {
                 speler.gebruikJoker(speler.getPositie());
                 antwoord = scanner.nextLine().trim().toLowerCase();

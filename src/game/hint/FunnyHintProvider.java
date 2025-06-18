@@ -1,4 +1,4 @@
-// FunnyHintProvider.java
+
 package game.hint;
 
 public class FunnyHintProvider implements HintProvider {

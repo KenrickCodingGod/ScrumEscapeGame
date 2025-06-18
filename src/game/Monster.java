@@ -13,12 +13,9 @@ public class Monster {
         return naam;
     }
 
-    public String getUitleg() {
-        return uitleg;
-    }
 
     public void toonMonster() {
-        System.out.println("🧌 Monster opgeroepen: " + naam);
+        System.out.println("🧟‍♂️ Monster opgeroepen: " + naam);
         System.out.println("💬 Uitleg: " + uitleg);
     }
 

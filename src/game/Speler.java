@@ -16,12 +16,15 @@ public class Speler {
 
 
     public int getPositie() {
+
         return positie;
+
     }
 
     public void setPositie(int positie) {
+
         this.positie = positie;
-        notifyObservers(); // meld aan observers
+        notifyObservers(); // meld aan observeers
     }
 
     public List<Monster> getMonsters() {
@@ -62,7 +65,7 @@ public class Speler {
         return gekozenJoker;
     }
 
-    // Observer functionaliteit
+    //oserver functionaliteit
     public void voegObserverToe(SpelerObserver observer) {
         observers.add(observer);
     }
@@ -72,20 +75,4 @@ public class Speler {
             o.update(this);
         }
     }
-
-    private final List<Voorwerp> voorwerpen = new ArrayList<>();
-
-    public void voegVoorwerpToe(Voorwerp v) {
-        voorwerpen.add(v);
-    }
-
-    public List<Voorwerp> getVoorwerpen() {
-        return voorwerpen;
-    }
-
-    public boolean heeftVoorwerp(String naam) {
-        return voorwerpen.stream().anyMatch(v -> v.getNaam().equalsIgnoreCase(naam));
-    }
-
-
 }

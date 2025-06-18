@@ -13,7 +13,7 @@ public class StandaardVoorwerp implements Voorwerp {
 
     @Override
     public String gebruik(Monster monster) {
-        return "🗡️ " + effect + " (tegen " + monster.getNaam() + ")";
+        return  effect + " (tegen " + monster.getNaam() + ")";
     }
 
 

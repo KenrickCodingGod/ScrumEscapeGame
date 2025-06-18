@@ -6,7 +6,6 @@ import java.util.List;
 
 public class KeyJoker implements Joker {
     private boolean gebruikt = false;
-    private final List<Integer> geldigeKamers = Arrays.asList(2, 4);
 
     @Override
     public void gebruik() {

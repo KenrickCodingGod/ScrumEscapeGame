@@ -6,8 +6,8 @@ import java.util.List;
 
 public class DatabaseManager {
     private static final String URL = "jdbc:mysql://localhost:3306/scrum_escape";
-    private static final String USER = "root"; // ✏️ Pas aan als nodig
-    private static final String PASSWORD = "kenrick"; // ✏️ Pas aan als nodig
+    private static final String USER = "root"; // pas aan als nodig
+    private static final String PASSWORD = "kenrick"; // pas aan als nodig
 
     public DatabaseManager() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -28,7 +28,7 @@ public class DatabaseManager {
     }
 
     public void slaVoortgangOp(int positie, List<Monster> monsters) {
-        // Monsterlijst opslaan als string (alleen namen)
+        // monsterlijst opslaan als string (alleen namen)
         String monstersStr = monsters.stream()
                 .map(Monster::getNaam)
                 .reduce((a, b) -> a + "," + b)
@@ -84,15 +84,15 @@ public class DatabaseManager {
         }
     }
 
-    // Herbouw Monster op basis van naam (minimale beschrijving)
+    // herbouw monster op basis van nam
     private Monster maakMonsterOpNaam(String naam) {
         return switch (naam) {
-            case "Scope Creep" -> new Monster("Scope Creep", "Te veel werk zonder afstemming toegevoegd.");
-            case "Vertraging" -> new Monster("Vertraging", "Je team communiceert niet goed.");
-            case "Chaos" -> new Monster("Chaos", "Geen overzicht op de taken.");
-            case "Onbegrip" -> new Monster("Onbegrip", "Stakeholders snappen het resultaat niet.");
-            case "Herhaling" -> new Monster("Herhaling", "Je leert niet van fouten.");
-            case "ScrumVergeetMonster" -> new Monster("ScrumVergeetMonster", "TIA is vergeten.");
+            case "Scopezilla" -> new Monster("Scopezilla", "Te veel werk zonder afstemming toegevoegd.");
+            case "TeamStilte Zombie" -> new Monster("TeamStilte Zombie", "Je team communiceert niet goed.");
+            case "Chaos Tornado" -> new Monster("Chaos Tornado", "Geen overzicht op de taken.");
+            case "FeedbackFobie" -> new Monster("FeedbackFobie", "Stakeholders snappen het resultaat niet.");
+            case "LoopSpook" -> new Monster("LoopSpook", "Je leert niet van fouten.");
+            case "TIAverslinder" -> new Monster("TIAverslinder", "TIA is vergeten.");
             default -> new Monster(naam, "Onbekend monster uit opgeslagen data.");
         };
     }
