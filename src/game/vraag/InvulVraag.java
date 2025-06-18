@@ -17,6 +17,13 @@ public class InvulVraag implements Vraag {
         this.juistAntwoord = juistAntwoord.toLowerCase();
     }
 
+    //Constructor voor test
+    public InvulVraag(String vraagtekst, String juistAntwoord, Scanner scanner) {
+        this.vraagtekst = vraagtekst;
+        this.juistAntwoord = juistAntwoord.toLowerCase();
+        this.scanner = scanner;
+    }
+
     @Override
     public boolean stelVraag(Speler speler) {
         System.out.println(vraagtekst);
