@@ -23,7 +23,7 @@ public class DatabaseManager {
             stmt.execute(sql);
 
         } catch (SQLException e) {
-            System.out.println("❌ Fout bij verbinden met database: " + e.getMessage());
+
         }
     }
 
@@ -44,7 +44,7 @@ public class DatabaseManager {
             stmt.setString(2, monstersStr);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("❌ Opslaan mislukt: " + e.getMessage());
+
         }
     }
 
@@ -68,7 +68,7 @@ public class DatabaseManager {
                 return speler;
             }
         } catch (SQLException e) {
-            System.out.println("⚠️ Geen opgeslagen voortgang gevonden of fout bij laden: " + e.getMessage());
+
         }
 
         return new Speler();

@@ -15,7 +15,7 @@ public class Monster {
 
 
     public void toonMonster() {
-        System.out.println("🧟‍♂️ Monster opgeroepen: " + naam);
+        System.out.println("------------------------------\n🧟‍♂️ Monster opgeroepen: " + naam);
         System.out.println("💬 Uitleg: " + uitleg);
     }
 

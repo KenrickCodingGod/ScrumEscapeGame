@@ -144,12 +144,12 @@ public class Game {
                             speler.voegMonsterToe(monster);
                             db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
 
-                            System.out.println("❓ Wil je een hint? (ja/nee)");
+                            System.out.println("❓ Wil je een hint? (ja/nee)\n------------------------------");
                             String hintKeuze = scanner.nextLine().toLowerCase();
 
                             if (hintKeuze.equals("ja")) {
                                 String inhoudelijkeHint = switch (huidigeKamer.getNaam()) {
-                                    case "Sprint Planning" -> "HelpHint: Wat plan je aan het begin van de sprint, maar voer je pas aan het eind uit?";
+                                    case "Sprint Planning" -> "HelpHint: Wat doen developers aan het einde van hun process?";
                                     case "Daily Scrum" -> "HelpHint: Wie werken er dagelijks(daily) aan de code / project?";
                                     case "Scrum Board" -> "HelpHint: Denk goed na: is dit een werkbord of een persoonlijke planner?";
                                     case "Sprint Review" -> "HelpHint: Wanneer toon je het werk aan de stakeholders?";
@@ -167,8 +167,8 @@ public class Game {
 
 
                             // vraag om voorwerp
-                            System.out.println("❓ Wil je het voorwerp '" + huidigeKamer.getVoorwerp().getNaam() +
-                                    "' gebruiken om het monster te verslaan? (ja/nee)");
+                            System.out.println("------------------------------\n❓ Wil je het voorwerp '" + huidigeKamer.getVoorwerp().getNaam() +
+                                    "' gebruiken om het monster te verslaan? (ja/nee)\n------------------------------");
                             String keuze = scanner.nextLine().toLowerCase();
 
                             if (keuze.equals("ja")) {
