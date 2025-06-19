@@ -8,7 +8,7 @@ import game.voorwerp.Voorwerp;
 
 public class Kamer {
     private final String naam;
-    private final Vraag vraag;
+    protected final Vraag vraag;
     private final Voorwerp voorwerp;
 
     public Kamer(String naam, Vraag vraag, Voorwerp voorwerp) {

@@ -8,14 +8,14 @@ import game.voorwerp.StandaardVoorwerp;
 
 
 public class KamerFinale extends Kamer {
-    private Vraag vraag;
+    //private Vraag vraag;
 
 
     public KamerFinale() {
         super(
                 "Finale Kamer",
-                this.vraag = new MeerkeuzeVraag(
-                        "Wat is het belangrijkste doel van Scrum? (typ exact: samenwerking)",
+                new MeerkeuzeVraag(
+                        "Waar staat TIA voor in scrum?",
                         new String[]{
                                 "A) Team, Instructie, en Activiteit",
                                 "B) Transparantie, Inspectie en Aanpassing",
