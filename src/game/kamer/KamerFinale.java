@@ -1,18 +1,13 @@
 package game.kamer;
 
 import game.Speler;
-import game.vraag.InvulVraag;
 import game.vraag.MeerkeuzeVraag;
-import game.vraag.Vraag;
 import game.voorwerp.StandaardVoorwerp;
 
-
 public class KamerFinale extends Kamer {
-    //private Vraag vraag;
-
-
-    public KamerFinale() {
+    public KamerFinale(int nummer) {
         super(
+                nummer,
                 "Finale Kamer",
                 new MeerkeuzeVraag(
                         "Waar staat TIA voor in scrum?",
@@ -21,15 +16,12 @@ public class KamerFinale extends Kamer {
                                 "B) Transparantie, Inspectie en Aanpassing",
                                 "C) Technische Integratie Aanpak"
                         },
-
                         "b"
                 ),
                 new StandaardVoorwerp("Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!")
         );
-
     }
 
-    @Override
     public boolean voerUit(Speler speler) {
         System.out.println("Je bent in de kamer: " + getNaam());
         boolean juist = vraag.stelVraag(speler);
