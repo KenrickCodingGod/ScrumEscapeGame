@@ -15,4 +15,5 @@ void testUpdateMetStubSpeler() {
     // Controleer dat de stub inderdaad zijn vaste waarden heeft
     assertEquals(0, stubSpeler.getPositie());
     assertTrue(stubSpeler.getMonsters().isEmpty());
-
+}
+}
