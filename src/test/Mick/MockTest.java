@@ -1,57 +1,30 @@
 package test.Mick;
 package game.observer;
 
-import game.Monster;
 import game.Speler;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import java.util.Collections;
-import java.util.List;
-
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MockTest {
 
-    private GameStatusObserver observer;
-    private Speler speler;
-
-    @BeforeEach
-    void setUp() {
-        observer = new GameStatusObserver();
-        speler = mock(Speler.class);
-    }
-
     @Test
-    void testUpdateWithMonster() {
-        // Arrange
-        when(speler.getPositie()).thenReturn(2);
-        Monster monster = new Monster("Draak", "Vuurspuwend");
-        when(speler.getMonsters()).thenReturn(List.of(monster));
+    void testSpelerWaarschuwtMockObserver() {
+        // Arrange: maak een speler en een mock observer
+        Speler speler = new Speler();
+        MockObserver mockObserver = new MockObserver();
+        speler.addObserver(mockObserver);
 
-        // Act
-        observer.update(speler);
+        // Act: roep notifyObservers aan
+        speler.notifyObservers();
 
-        // Assert
-        verify(speler).getPositie();
-        verify(speler).getMonsters();
-    }
-
-    @Test
-    void testUpdateWithoutMonster() {
-        // Arrange
-        when(speler.getPositie()).thenReturn(5);
-        when(speler.getMonsters()).thenReturn(Collections.emptyList());
-
-        // Act
-        observer.update(speler);
-
-        // Assert
-        verify(speler).getPositie();
-        verify(speler).getMonsters();
+        // Assert: controleer of de mock observer is opgeroepen
+        assertTrue(mockObserver.isOpgeroepen, "De observer moet zijn opgeroepen");
     }
 }
 
-public class MockTest {
-}
+
+
+
+   
+
