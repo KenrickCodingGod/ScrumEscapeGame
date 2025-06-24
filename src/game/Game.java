@@ -45,8 +45,13 @@ public class Game {
         ));
 
         kamers.add(new Kamer(4, "Sprint Review",
-                new InvulVraag("In welke phase van de Sprint vindt de Sprint Review plaats?", "einde"),
-                new StandaardVoorwerp("Scrum HandBoek", "📖 Je hebt geleerd dat er 3 fases zijn: begin, midden en einde.")
+                new MatchVraag(
+                        "\nWat hoort bij wie of wat tijdens de Sprint Review?",
+                        new String[]{"Scrum Team", "Stakeholders", "Product Owner"},
+                        new String[]{"Ontvangen informatie en geven feedback", "Het bespreken van de Product Backlog", "Bespreken wat is bereikt in de sprint"},
+                        "A3 B1 C2"
+                ),
+                new StandaardVoorwerp("Scrum Gids", "📘 Je hebt alle rollen goed gekoppeld!")
         ));
 
         kamers.add(new Kamer(5, "Sprint Retrospective",
@@ -185,7 +190,7 @@ public class Game {
             case 1 -> "HelpHint: Wat doen developers aan het einde van hun process?";
             case 2 -> "HelpHint: Wie werken er dagelijks aan de code / project?";
             case 3 -> "HelpHint: Is dit een werkbord of persoonlijke planner?";
-            case 4 -> "HelpHint: Wanneer toon je werk aan stakeholders?";
+            case 4 -> "HelpHint: Kijk goed naar de antwoorden.";
             case 5 -> "HelpHint: Denk aan samenwerking in het team.";
             case 6 -> "HelpHint: Wat betekent TIA binnen Scrum?";
             default -> "HelpHint: Gebruik je Scrum-kennis goed!";

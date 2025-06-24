@@ -6,24 +6,23 @@ import game.joker.KeyJoker;
 
 import java.util.Scanner;
 
-public class InvulVraag implements Vraag {
+public class MatchVraag implements Vraag {
     private final String vraagtekst;
+    private final String[] links;
+    private final String[] rechts;
     private final String juistAntwoord;
     private final Scanner scanner;
 
-    public InvulVraag(String vraagtekst, String juistAntwoord) {
-        this(vraagtekst, juistAntwoord, new Scanner(System.in));
-    }
-
-    public InvulVraag(String vraagtekst, String juistAntwoord, Scanner scanner) {
+    public MatchVraag(String vraagtekst, String[] links, String[] rechts, String juistAntwoord) {
         this.vraagtekst = vraagtekst;
+        this.links = links;
+        this.rechts = rechts;
         this.juistAntwoord = juistAntwoord.toLowerCase();
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
     public boolean stelVraag(Speler speler) {
-        int kamerNummer = speler.getPositie();
         toonVraag();
 
         while (true) {
@@ -31,15 +30,15 @@ public class InvulVraag implements Vraag {
 
             switch (antwoord) {
                 case "gebruik assistent" -> {
-                    verwerkAssistent(kamerNummer);
+                    verwerkAssistent(speler.getPositie());
                     toonPrompt();
                 }
                 case "keyjoker" -> {
-                    if (verwerkKeyJoker(speler, kamerNummer)) return true;
+                    if (verwerkKeyJoker(speler)) return true;
                     toonPrompt();
                 }
                 case "hintjoker" -> {
-                    verwerkHintJoker(speler, kamerNummer);
+                    verwerkHintJoker(speler);
                     toonPrompt();
                 }
                 default -> {
@@ -51,15 +50,32 @@ public class InvulVraag implements Vraag {
 
     private void toonVraag() {
         System.out.println(vraagtekst);
+        System.out.println("Koppel de juiste paren, bijvoorbeeld: A2 B1 C3");
+
+        int maxLength = 0;
+        for (String link : links) {
+            if (link.length() > maxLength) {
+                maxLength = link.length();
+            }
+        }
+
+        for (int i = 0; i < links.length; i++) {
+            String linkerLabel = (char) ('A' + i) + ") " + links[i];
+            String rechterLabel = (i + 1) + ") " + rechts[i];
+            String spaties = " ".repeat(maxLength - links[i].length() + 4);
+            System.out.println(linkerLabel + spaties + rechterLabel);
+        }
+
         System.out.print("> ");
+    }
+
+
+    private String leesInput() {
+        return scanner.nextLine().trim().toLowerCase();
     }
 
     private void toonPrompt() {
         System.out.print("> ");
-    }
-
-    private String leesInput() {
-        return scanner.nextLine().trim().toLowerCase();
     }
 
     private void verwerkAssistent(int kamerNummer) {
@@ -75,13 +91,13 @@ public class InvulVraag implements Vraag {
         }
     }
 
-    private boolean verwerkKeyJoker(Speler speler, int kamerNummer) {
+    private boolean verwerkKeyJoker(Speler speler) {
         if (!speler.heeftJoker() || !(speler.getGekozenJoker() instanceof KeyJoker keyJoker)) {
             System.out.println("❌ Je hebt niet de KeyJoker gekozen.");
             return false;
         }
 
-        if (keyJoker.magGebruikenInKamer(kamerNummer)) {
+        if (keyJoker.magGebruikenInKamer(speler.getPositie())) {
             keyJoker.gebruik();
             System.out.println("🔑 Je hebt de KeyJoker gebruikt! De kamer wordt overgeslagen.");
             return true;
@@ -91,9 +107,9 @@ public class InvulVraag implements Vraag {
         }
     }
 
-    private void verwerkHintJoker(Speler speler, int kamerNummer) {
+    private void verwerkHintJoker(Speler speler) {
         if (speler.heeftJoker()) {
-            speler.gebruikJoker(kamerNummer);
+            speler.gebruikJoker(speler.getPositie());
         } else {
             System.out.println("❌ Je hebt geen hintjoker of je hebt hem al gebruikt.");
         }
