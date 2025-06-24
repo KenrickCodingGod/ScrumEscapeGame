@@ -1,11 +1,8 @@
 package game;
 
-import game.command.SetPositieCommand;
-import game.command.SpelerCommand;
-import game.command.VoegMonsterToeCommand;
+import game.command.*;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
@@ -61,14 +58,12 @@ public class DatabaseManager {
                 int positie = rs.getInt("positie");
                 String[] monsterNamen = rs.getString("monsters").split(",");
                 Speler speler = new Speler();
-                SpelerCommand positieCommand = new SetPositieCommand(speler, positie);
-                positieCommand.execute();
+                CommandUitvoerder.voerUit(new SetPositieCommand(speler, positie));
 
                 for (String naam : monsterNamen) {
                     if (!naam.isBlank()) {
                         Monster m = maakMonsterOpNaam(naam);
-                        SpelerCommand monsterCommand = new VoegMonsterToeCommand(speler, m);
-                        monsterCommand.execute();
+                        CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, m));
                     }
                 }
                 return speler;

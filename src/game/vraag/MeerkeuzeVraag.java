@@ -5,8 +5,7 @@ import game.assistent.Assistent;
 import game.assistent.HintAssistent;
 import game.assistent.Motivator;
 import game.assistent.StappenplanHulpmiddel;
-import game.command.GebruikJokerCommand;
-import game.command.SpelerCommand;
+import game.command.*;
 import game.joker.KeyJoker;
 
 import java.util.Scanner;
@@ -66,8 +65,7 @@ public class MeerkeuzeVraag implements Vraag {
 
         if (antwoord.equals("hintjoker")) {
             if (speler.heeftJoker()) {
-                SpelerCommand cmd = new GebruikJokerCommand(speler, speler.getPositie());
-                cmd.execute();
+                CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, speler.getPositie()));
                 antwoord = scanner.nextLine().trim().toLowerCase();
                 return antwoord.equals(juistAntwoord);
             } else {
