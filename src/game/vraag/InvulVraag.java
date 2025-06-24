@@ -3,6 +3,8 @@ package game.vraag;
 
 import game.Speler;
 import game.assistent.*;
+import game.command.GebruikJokerCommand;
+import game.command.SpelerCommand;
 import game.joker.KeyJoker;
 
 import java.util.Scanner;
@@ -68,7 +70,8 @@ public class InvulVraag implements Vraag {
 
         if (antwoord.equals("hintjoker")) {
             if (speler.heeftJoker()) {
-                speler.gebruikJoker(speler.getPositie());
+                SpelerCommand cmd = new GebruikJokerCommand(speler, speler.getPositie());
+                cmd.execute();
                 antwoord = scanner.nextLine().trim().toLowerCase();
                 return antwoord.equals(juistAntwoord);
             } else {

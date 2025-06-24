@@ -1,6 +1,10 @@
 package game;
 
 import game.assistent.*;
+import game.command.KiesJokerCommand;
+import game.command.SetPositieCommand;
+import game.command.SpelerCommand;
+import game.command.VoegMonsterToeCommand;
 import game.joker.*;
 import game.kamer.*;
 import game.observer.GameStatusObserver;
@@ -76,18 +80,21 @@ public class Game {
         System.out.println("1. HintJoker (bruikbaar in alle kamers) *gebruik door 'hintjoker' te typen*");
         System.out.println("2. KeyJoker (bruikbaar in kamer 2 en 4) *gebruik door 'keyjoker' te typen*\n------------------------------");
         System.out.println("Gebruik een assistent in kamer 1 en 3 door 'gebruik assistent' te typen.");
-        System.out.println("Commando's: 'status', 'reset', 'ga naar kamer X'\n------------------------------");
+        System.out.println("Commando's: 'status', 'reset', 'ga naar kamer X'\n" +
+                "------------------------------");
     }
 
     private void kiesJoker() {
         System.out.print(">> ");
         String gekozenjoker = scanner.nextLine();
         if (gekozenjoker.equals("1")) {
-            speler.kiesJoker(new HintJoker());
+            SpelerCommand cmd = new KiesJokerCommand(speler, new HintJoker());
+            cmd.execute();
             System.out.println("Je hebt gekozen voor de HintJoker.");
         }
         else if (gekozenjoker.equals("2")) {
-            speler.kiesJoker(new KeyJoker());
+            SpelerCommand cmd = new KiesJokerCommand(speler, new KeyJoker());
+            cmd.execute();
             System.out.println("Je hebt gekozen voor de KeyJoker.");
         }
     }
@@ -140,7 +147,8 @@ public class Game {
 
     private void verwerkVoltooideKamer() {
         System.out.println("Goedzo ga zo door!");
-        speler.setPositie(speler.getPositie() + 1);
+        SpelerCommand cmd = new SetPositieCommand(speler, speler.getPositie() + 1);
+        cmd.execute();
         db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
     }
 
@@ -158,7 +166,8 @@ public class Game {
         }
 
         Monster monster = bepaalMonsterVoorKamer(kamer.getKamerNummer());
-        speler.voegMonsterToe(monster);
+        SpelerCommand cmd = new VoegMonsterToeCommand(speler, monster);
+        cmd.execute();
         db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
 
         if (vraagOmHint(kamer)) {
