@@ -4,6 +4,7 @@ import game.assistent.*;
 import game.joker.*;
 import game.kamer.*;
 import game.observer.GameStatusObserver;
+import game.voorwerp.Readable;
 import game.vraag.*;
 import game.voorwerp.*;
 import game.hint.*;
@@ -26,12 +27,12 @@ public class Game {
     private void initialiseerKamers() {
         kamers.add(new Kamer(1, "Sprint Planning",
                 new InvulVraag("Wat is meestal het laatste op de planning als het gaat om coderen?", "testen"),
-                new StandaardVoorwerp("Diamanten Zwaard", "🗡️ Je doet 10 hartjes damage!")
+                new Zwaard("Diamanten Zwaard", "🗡️ Je doet 10 hartjes damage!")
         ));
 
         kamers.add(new Kamer(2, "Daily Scrum",
                 new InvulVraag("Welke mensen zitten er ALTIJD bij de Daily Scrum?", "developers"),
-                new StandaardVoorwerp("All wetende boek", "📖 Je hebt geleerd dat het antwoord developers, product owners of scrum master is.")
+                new Boek("All wetende boek", " Je hebt geleerd dat het antwoord developers, product owners of scrum master is.")
         ));
 
         kamers.add(new Kamer(3, "Scrum Board",
@@ -41,17 +42,17 @@ public class Game {
                         "C) Epics en bugs",
                         "D) Review / testen"
                 }, "b"),
-                new StandaardVoorwerp("Excalibur", "🗡️ Je vernietigt het monster met Excalibur!")
+                new Zwaard("Excalibur", "🗡️ Je vernietigt het monster met Excalibur!")
         ));
 
         kamers.add(new Kamer(4, "Sprint Review",
                 new InvulVraag("In welke phase van de Sprint vindt de Sprint Review plaats?", "einde"),
-                new StandaardVoorwerp("Scrum HandBoek", "📖 Je hebt geleerd dat er 3 fases zijn: begin, midden en einde.")
+                new Boek("Scrum HandBoek", " Je hebt geleerd dat er 3 fases zijn: begin, midden en einde.")
         ));
 
         kamers.add(new Kamer(5, "Sprint Retrospective",
                 new InvulVraag("In een retrospective evalueer je 2 onderdelen. Eén is 'het proces', wat is de andere?", "samenwerking"),
-                new StandaardVoorwerp("Katana", "🗡️ Je slaat het monster doormidden als in Fruit Ninja!")
+                new Zwaard("Katana", "🗡️ Je slaat het monster doormidden als in Fruit Ninja!")
         ));
 
         kamers.add(new KamerFinale(FINALE_KAMER_NUMMER));
@@ -197,17 +198,32 @@ public class Game {
     }
 
     private boolean vraagOmVoorwerpGebruik(Kamer kamer, Monster monster) {
-        System.out.println("------------------------------\n❓ Wil je het voorwerp '" +
-                kamer.getVoorwerp().getNaam() + "' gebruiken om het monster te verslaan? (ja/nee)\n------------------------------");
+        Object voorwerp = kamer.getVoorwerp();
 
-        if (scanner.nextLine().equalsIgnoreCase("ja")) {
-            System.out.println(kamer.getVoorwerp().gebruik(monster));
+        if (voorwerp instanceof Weapon weapon) {
+            String naam = weapon.getNaam();
+
+            System.out.println("------------------------------");
+            System.out.print("Je hebt zwaard gevonden genaamd: '" + naam + "' wil je het gebruiken om " + monster.getNaam() +  " te verslaan?(ja/nee)\n------------------------------\n");
+
+            if (!scanner.nextLine().equalsIgnoreCase("ja")) {
+                return false;
+            }
+
+            System.out.println(weapon.attack(monster));
             System.out.println("✅ Monster verslagen. Je mag de vraag opnieuw beantwoorden.");
             return true;
-        }
 
+        } else if (voorwerp instanceof Readable) {
+            System.out.println("------------------------------");
+            System.out.println("ℹ️ Helaas helpt een boek niet tegen een monster :/.");
+            return false;
+
+        }
         return false;
     }
+
+
 
     private void resetSpel() {
         db.resetVoortgang();

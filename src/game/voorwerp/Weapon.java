@@ -2,7 +2,7 @@ package game.voorwerp;
 
 import game.Monster;
 
-public interface Voorwerp {
-    String gebruik(Monster monster);
+public interface Weapon {
+    String attack(Monster monster);
     String getNaam();
 }

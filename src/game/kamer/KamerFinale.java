@@ -1,8 +1,8 @@
 package game.kamer;
 
 import game.Speler;
+import game.voorwerp.Zwaard;
 import game.vraag.MeerkeuzeVraag;
-import game.voorwerp.StandaardVoorwerp;
 
 public class KamerFinale extends Kamer {
     public KamerFinale(int nummer) {
@@ -18,7 +18,7 @@ public class KamerFinale extends Kamer {
                         },
                         "b"
                 ),
-                new StandaardVoorwerp("Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!")
+                new Zwaard("Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!")
         );
     }
 

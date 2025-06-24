@@ -2,7 +2,6 @@ package game;
 
 import game.joker.Joker;
 import game.observer.SpelerObserver;
-import game.voorwerp.Voorwerp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
