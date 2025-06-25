@@ -16,11 +16,10 @@ public class Game {
     private static final int FINALE_KAMER_NUMMER = 6;
     private final List<Kamer> kamers = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
-    private final DatabaseManager db = new DatabaseManager();
     private Speler speler;
 
     public Game() {
-        speler = db.laadVoortgang();
+        speler = new Speler();
         speler.voegObserverToe(new GameStatusObserver());
         initialiseerKamers();
     }
@@ -158,7 +157,7 @@ public class Game {
     private void verwerkVoltooideKamer() {
         System.out.println("Goedzo ga zo door!");
         CommandUitvoerder.voerUit(new SetPositieCommand(speler, speler.getPositie() + 1));
-        db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
+
     }
 
 
@@ -176,7 +175,6 @@ public class Game {
 
         Monster monster = bepaalMonsterVoorKamer(kamer.getKamerNummer());
         CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, monster));
-        db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
 
         if (vraagOmHint(kamer)) {
             toonHintVoorKamer(kamer.getKamerNummer());
@@ -255,7 +253,6 @@ public class Game {
     }
 
     private void resetSpel() {
-        db.resetVoortgang();
         speler = new Speler();
         speler.voegObserverToe(new GameStatusObserver());
         System.out.println("🔁 Spel is opnieuw gestart.");
