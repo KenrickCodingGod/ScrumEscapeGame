@@ -27,7 +27,7 @@ public class InvulVraag implements Vraag {
 
     @Override
     public boolean stelVraag(Speler speler, Kamer kamer) {
-        int kamerNummer = speler.getPositie();
+        int kamerNummer = kamer.getKamerNummer();
         toonVraag();
 
         while (true) {
@@ -106,7 +106,7 @@ public class InvulVraag implements Vraag {
 
     private void verwerkHintJoker(Speler speler, int kamerNummer) {
         if (speler.heeftJoker()) {
-            CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, speler.getPositie()));
+            CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, kamerNummer));
         } else {
             System.out.println("❌ Je hebt geen hintjoker of je hebt hem al gebruikt.");
         }

@@ -1,5 +1,6 @@
 package game.vraag;
 
+import game.command.*;
 import game.Speler;
 import game.assistent.*;
 import game.joker.KeyJoker;
@@ -25,6 +26,7 @@ public class MatchVraag implements Vraag {
 
     @Override
     public boolean stelVraag(Speler speler, Kamer kamer) {
+        int kamerNummer = kamer.getKamerNummer();
         toonVraag();
 
         while (true) {
@@ -32,15 +34,15 @@ public class MatchVraag implements Vraag {
 
             switch (antwoord) {
                 case "gebruik assistent" -> {
-                    verwerkAssistent(speler.getPositie());
+                    verwerkAssistent(kamerNummer);
                     toonPrompt();
                 }
                 case "keyjoker" -> {
-                    if (verwerkKeyJoker(speler)) return true;
+                    if (verwerkKeyJoker(speler, kamerNummer)) return true;
                     toonPrompt();
                 }
                 case "hintjoker" -> {
-                    verwerkHintJoker(speler);
+                    verwerkHintJoker(speler, kamerNummer);
                     toonPrompt();
                 }
                 case "gebruik boek" -> {
@@ -102,13 +104,13 @@ public class MatchVraag implements Vraag {
         }
     }
 
-    private boolean verwerkKeyJoker(Speler speler) {
+    private boolean verwerkKeyJoker(Speler speler, int kamerNummer) {
         if (!speler.heeftJoker() || !(speler.getGekozenJoker() instanceof KeyJoker keyJoker)) {
             System.out.println("❌ Je hebt niet de KeyJoker gekozen.");
             return false;
         }
 
-        if (keyJoker.magGebruikenInKamer(speler.getPositie())) {
+        if (keyJoker.magGebruikenInKamer(kamerNummer)) {
             keyJoker.gebruik();
             System.out.println("🔑 Je hebt de KeyJoker gebruikt! De kamer wordt overgeslagen.");
             return true;
@@ -118,9 +120,9 @@ public class MatchVraag implements Vraag {
         }
     }
 
-    private void verwerkHintJoker(Speler speler) {
+    private void verwerkHintJoker(Speler speler, int kamerNummer) {
         if (speler.heeftJoker()) {
-            speler.gebruikJoker(speler.getPositie());
+            CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, kamerNummer));
         } else {
             System.out.println("❌ Je hebt geen hintjoker of je hebt hem al gebruikt.");
         }

@@ -27,6 +27,7 @@ public class MeerkeuzeVraag implements Vraag {
 
     @Override
     public boolean stelVraag(Speler speler, Kamer kamer) {
+        int kamerNummer = kamer.getKamerNummer();
         toonVraag();
 
         while (true) {
@@ -34,18 +35,15 @@ public class MeerkeuzeVraag implements Vraag {
 
             switch (antwoord) {
                 case "gebruik assistent" -> {
-                    verwerkAssistent(speler);
+                    verwerkAssistent(kamerNummer);
                     toonPrompt();
                 }
-
                 case "keyjoker" -> {
-                    boolean overgeslagen = verwerkKeyJoker(speler);
-                    if (overgeslagen) return true;
+                    if (verwerkKeyJoker(speler, kamerNummer)) return true;
                     toonPrompt();
                 }
-
                 case "hintjoker" -> {
-                    verwerkHintJoker(speler);
+                    verwerkHintJoker(speler, kamerNummer);
                     toonPrompt();
                 }
                 case "gebruik boek" -> {
@@ -57,7 +55,6 @@ public class MeerkeuzeVraag implements Vraag {
                     }
                     toonPrompt();
                 }
-
                 default -> {
                     return antwoord.equals(juistAntwoord);
                 }
@@ -81,13 +78,10 @@ public class MeerkeuzeVraag implements Vraag {
         return scanner.nextLine().trim().toLowerCase();
     }
 
-    private void verwerkAssistent(Speler speler) {
-        int kamerIndex = speler.getPositie();
-        boolean assistentBeschikbaar = kamerIndex == 0 || kamerIndex == 2;
-
-        if (assistentBeschikbaar) {
+    private void verwerkAssistent(int kamerNummer) {
+        if (kamerNummer == 0 || kamerNummer == 2) {
             Assistent assistent = new Assistent(
-                    new HintAssistent(kamerIndex),
+                    new HintAssistent(kamerNummer),
                     new StappenplanHulpmiddel(),
                     new Motivator()
             );
@@ -98,9 +92,9 @@ public class MeerkeuzeVraag implements Vraag {
     }
 
 
-    private boolean verwerkKeyJoker(Speler speler) {
+    private boolean verwerkKeyJoker(Speler speler, int kamerNummer) {
         if (speler.heeftJoker() && speler.getGekozenJoker() instanceof KeyJoker keyJoker) {
-            if (keyJoker.magGebruikenInKamer(speler.getPositie())) {
+            if (keyJoker.magGebruikenInKamer(kamerNummer)) {
                 keyJoker.gebruik();
                 System.out.println("🔑 Je hebt de KeyJoker gebruikt! De kamer wordt overgeslagen.");
                 return true;
@@ -114,9 +108,9 @@ public class MeerkeuzeVraag implements Vraag {
         return false;
     }
 
-    private void verwerkHintJoker(Speler speler) {
+    private void verwerkHintJoker(Speler speler, int kamerNummer) {
         if (speler.heeftJoker()) {
-            CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, speler.getPositie()));
+            CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, kamerNummer));
         } else {
             System.out.println("Je hebt geen joker of je hebt hem al gebruikt.");
         }
