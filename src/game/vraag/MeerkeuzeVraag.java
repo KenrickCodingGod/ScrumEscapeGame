@@ -21,7 +21,7 @@ public class MeerkeuzeVraag implements Vraag {
         this.vraagtekst = vraagtekst;
         this.opties = opties;
         this.juistAntwoord = juistAntwoord.toLowerCase();
-        this.scanner = new Scanner(System.in); // beter via constructor injecteren
+        this.scanner = new Scanner(System.in);
     }
 
     @Override

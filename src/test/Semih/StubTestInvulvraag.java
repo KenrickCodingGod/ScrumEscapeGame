@@ -6,7 +6,6 @@ import game.voorwerp.Zwaard;
 import game.vraag.InvulVraag;
 import org.junit.jupiter.api.Test;
 import game.kamer.Kamer;
-
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
@@ -52,7 +51,6 @@ class StubTestInvulvraag {
         );
 
         boolean resultaat = vraag.stelVraag(speler, dummyKamer);
-
         assertFalse(resultaat, "De vraag zou fout beantwoord moeten worden");
     }
 }
