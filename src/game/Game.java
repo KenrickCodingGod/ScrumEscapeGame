@@ -1,6 +1,7 @@
 package game;
 
 import game.assistent.*;
+import game.command.*;
 import game.joker.*;
 import game.kamer.*;
 import game.observer.GameStatusObserver;
@@ -99,11 +100,11 @@ public class Game {
         System.out.print(">> ");
         String gekozenjoker = scanner.nextLine();
         if (gekozenjoker.equals("1")) {
-            speler.kiesJoker(new HintJoker());
+            CommandUitvoerder.voerUit(new KiesJokerCommand(speler, new HintJoker()));
             System.out.println("Je hebt gekozen voor de HintJoker.");
         }
         else if (gekozenjoker.equals("2")) {
-            speler.kiesJoker(new KeyJoker());
+            CommandUitvoerder.voerUit(new KiesJokerCommand(speler, new KeyJoker()));
             System.out.println("Je hebt gekozen voor de KeyJoker.");
         }
     }
@@ -156,7 +157,7 @@ public class Game {
 
     private void verwerkVoltooideKamer() {
         System.out.println("Goedzo ga zo door!");
-        speler.setPositie(speler.getPositie() + 1);
+        CommandUitvoerder.voerUit(new SetPositieCommand(speler, speler.getPositie() + 1));
         db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
     }
 
@@ -174,7 +175,7 @@ public class Game {
         }
 
         Monster monster = bepaalMonsterVoorKamer(kamer.getKamerNummer());
-        speler.voegMonsterToe(monster);
+        CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, monster));
         db.slaVoortgangOp(speler.getPositie(), speler.getMonsters());
 
         if (vraagOmHint(kamer)) {

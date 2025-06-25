@@ -2,6 +2,7 @@ package game.vraag;
 
 import game.Speler;
 import game.assistent.*;
+import game.command.*;
 import game.joker.KeyJoker;
 import game.kamer.Kamer;
 import game.voorwerp.Readable;
@@ -17,6 +18,7 @@ public class InvulVraag implements Vraag {
         this(vraagtekst, juistAntwoord, new Scanner(System.in));
     }
 
+    //Constructor voor test
     public InvulVraag(String vraagtekst, String juistAntwoord, Scanner scanner) {
         this.vraagtekst = vraagtekst;
         this.juistAntwoord = juistAntwoord.toLowerCase();
@@ -104,7 +106,7 @@ public class InvulVraag implements Vraag {
 
     private void verwerkHintJoker(Speler speler, int kamerNummer) {
         if (speler.heeftJoker()) {
-            speler.gebruikJoker(kamerNummer);
+            CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, speler.getPositie()));
         } else {
             System.out.println("❌ Je hebt geen hintjoker of je hebt hem al gebruikt.");
         }

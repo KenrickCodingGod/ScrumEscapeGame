@@ -5,6 +5,7 @@ import game.assistent.Assistent;
 import game.assistent.HintAssistent;
 import game.assistent.Motivator;
 import game.assistent.StappenplanHulpmiddel;
+import game.command.*;
 import game.joker.KeyJoker;
 import game.kamer.Kamer;
 import game.voorwerp.Readable;
@@ -115,7 +116,7 @@ public class MeerkeuzeVraag implements Vraag {
 
     private void verwerkHintJoker(Speler speler) {
         if (speler.heeftJoker()) {
-            speler.gebruikJoker(speler.getPositie());
+            CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, speler.getPositie()));
         } else {
             System.out.println("Je hebt geen joker of je hebt hem al gebruikt.");
         }
