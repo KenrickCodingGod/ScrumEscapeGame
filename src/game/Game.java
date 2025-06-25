@@ -255,7 +255,8 @@ public class Game {
     private void resetSpel() {
         speler = new Speler();
         speler.voegObserverToe(new GameStatusObserver());
-        System.out.println("🔁 Spel is opnieuw gestart.");
+        System.out.println("🔁 Spel wordt opnieuw gestart...\n");
+        start();
     }
 
     private void toonStatus() {
