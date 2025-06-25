@@ -6,6 +6,7 @@ import game.assistent.HintAssistent;
 import game.assistent.Motivator;
 import game.assistent.StappenplanHulpmiddel;
 import game.joker.KeyJoker;
+import game.kamer.Kamer;
 
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ public class MeerkeuzeVraag implements Vraag {
     }
 
     @Override
-    public boolean stelVraag(Speler speler) {
+    public boolean stelVraag(Speler speler, Kamer kamer) {
         toonVraag();
 
         while (true) {

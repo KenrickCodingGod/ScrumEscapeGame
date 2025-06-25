@@ -33,6 +33,6 @@ public class Kamer {
 
     public boolean voerUit(Speler speler) {
         System.out.println("Je bent in kamer " + Kamernummer + ": " + naam);
-        return vraag.stelVraag(speler);
+        return vraag.stelVraag(speler, this);
     }
 }

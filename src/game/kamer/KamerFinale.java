@@ -24,7 +24,7 @@ public class KamerFinale extends Kamer {
 
     public boolean voerUit(Speler speler) {
         System.out.println("Je bent in de kamer: " + getNaam());
-        boolean juist = vraag.stelVraag(speler);
+        boolean juist = vraag.stelVraag(speler, this);
         if (juist) {
             System.out.println("✅ Geweldig! Je hebt het Scrum Escape Game gewonnen!");
         } else {

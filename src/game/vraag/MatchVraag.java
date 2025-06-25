@@ -3,6 +3,7 @@ package game.vraag;
 import game.Speler;
 import game.assistent.*;
 import game.joker.KeyJoker;
+import game.kamer.Kamer;
 
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class MatchVraag implements Vraag {
     }
 
     @Override
-    public boolean stelVraag(Speler speler) {
+    public boolean stelVraag(Speler speler, Kamer kamer) {
         toonVraag();
 
         while (true) {
