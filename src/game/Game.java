@@ -216,8 +216,8 @@ public class Game {
         Weapon zwaard = kamer.getZwaard();
         Readable boek = kamer.getBoek();
 
-        System.out.println("------------------------------\nEr is een monster verschenen: " + monster.getNaam() + "\nJe ziet de volgende items die je zouden kunnen helpen:\nzwaard (type 'gebruik zwaard')\nboek (type 'gebruik boek')\nje kan ook niets doen\n> ");
-
+        System.out.println("------------------------------\nEr is een monster verschenen: " + monster.getNaam() + "\nJe ziet de volgende items die je zouden kunnen helpen:\nzwaard (type 'gebruik zwaard')\nboek (type 'gebruik boek')\nje kan ook niets doen\n");
+        System.out.print(">");
 
 
         String input = scanner.nextLine().toLowerCase();

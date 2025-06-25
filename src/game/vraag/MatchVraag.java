@@ -4,6 +4,7 @@ import game.Speler;
 import game.assistent.*;
 import game.joker.KeyJoker;
 import game.kamer.Kamer;
+import game.voorwerp.Readable;
 
 import java.util.Scanner;
 
@@ -40,6 +41,15 @@ public class MatchVraag implements Vraag {
                 }
                 case "hintjoker" -> {
                     verwerkHintJoker(speler);
+                    toonPrompt();
+                }
+                case "gebruik boek" -> {
+                    Readable boek = kamer.getBoek();
+                    if (boek != null) {
+                        System.out.println("📖 " + boek.showMessage());
+                    } else {
+                        System.out.println("❌ Er is geen boek in deze kamer.");
+                    }
                     toonPrompt();
                 }
                 default -> {
