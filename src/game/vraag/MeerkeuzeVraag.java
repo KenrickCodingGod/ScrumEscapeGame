@@ -6,74 +6,118 @@ import game.assistent.HintAssistent;
 import game.assistent.Motivator;
 import game.assistent.StappenplanHulpmiddel;
 import game.joker.KeyJoker;
+import game.kamer.Kamer;
+import game.voorwerp.Readable;
 
 import java.util.Scanner;
 
 public class MeerkeuzeVraag implements Vraag {
-    private String vraagtekst;
-    private String[] opties;
-    private String juistAntwoord;
-    private Scanner scanner = new Scanner(System.in);
+    private final String vraagtekst;
+    private final String[] opties;
+    private final String juistAntwoord;
+    private final Scanner scanner;
 
     public MeerkeuzeVraag(String vraagtekst, String[] opties, String juistAntwoord) {
         this.vraagtekst = vraagtekst;
         this.opties = opties;
         this.juistAntwoord = juistAntwoord.toLowerCase();
+        this.scanner = new Scanner(System.in); // beter via constructor injecteren
     }
 
     @Override
-    public boolean stelVraag(Speler speler) {
+    public boolean stelVraag(Speler speler, Kamer kamer) {
+        toonVraag();
+
+        while (true) {
+            String antwoord = leesInput();
+
+            switch (antwoord) {
+                case "gebruik assistent" -> {
+                    verwerkAssistent(speler);
+                    toonPrompt();
+                }
+
+                case "keyjoker" -> {
+                    boolean overgeslagen = verwerkKeyJoker(speler);
+                    if (overgeslagen) return true;
+                    toonPrompt();
+                }
+
+                case "hintjoker" -> {
+                    verwerkHintJoker(speler);
+                    toonPrompt();
+                }
+                case "gebruik boek" -> {
+                    Readable boek = kamer.getBoek();
+                    if (boek != null) {
+                        System.out.println("📖 " + boek.showMessage());
+                    } else {
+                        System.out.println("❌ Er is geen boek in deze kamer.");
+                    }
+                    toonPrompt();
+                }
+
+                default -> {
+                    return antwoord.equals(juistAntwoord);
+                }
+            }
+        }
+    }
+
+    private void toonVraag() {
         System.out.println(vraagtekst);
         for (String optie : opties) {
             System.out.println(optie);
         }
         System.out.print("> ");
-        String antwoord = scanner.nextLine().trim().toLowerCase();
+    }
 
-        if (antwoord.equals("gebruik assistent")) {
-            if (speler.getPositie() == 0 || speler.getPositie() == 2) { // kamer 1 of 3 (positie 0 of 2)
-                Assistent assistent = new Assistent(
-                        new HintAssistent(speler.getPositie()),
-                        new StappenplanHulpmiddel(),
-                        new Motivator()
-                );
-                assistent.activeer();
-                antwoord = scanner.nextLine().trim().toLowerCase();
-                return antwoord.equals(juistAntwoord);
+    private void toonPrompt() {
+        System.out.print("> ");
+    }
+
+    private String leesInput() {
+        return scanner.nextLine().trim().toLowerCase();
+    }
+
+    private void verwerkAssistent(Speler speler) {
+        int kamerIndex = speler.getPositie();
+        boolean assistentBeschikbaar = kamerIndex == 0 || kamerIndex == 2;
+
+        if (assistentBeschikbaar) {
+            Assistent assistent = new Assistent(
+                    new HintAssistent(kamerIndex),
+                    new StappenplanHulpmiddel(),
+                    new Motivator()
+            );
+            assistent.activeer();
+        } else {
+            System.out.println("❌ Assistent is niet beschikbaar in deze kamer.");
+        }
+    }
+
+
+    private boolean verwerkKeyJoker(Speler speler) {
+        if (speler.heeftJoker() && speler.getGekozenJoker() instanceof KeyJoker keyJoker) {
+            if (keyJoker.magGebruikenInKamer(speler.getPositie())) {
+                keyJoker.gebruik();
+                System.out.println("🔑 Je hebt de KeyJoker gebruikt! De kamer wordt overgeslagen.");
+                return true;
             } else {
-                System.out.println("❌ Assistent is niet beschikbaar in deze kamer.");
-                antwoord = scanner.nextLine().trim().toLowerCase();
-                return antwoord.equals(juistAntwoord);
+                System.out.println("❌ De KeyJoker mag alleen in kamer 2 of 4 worden gebruikt en slechts één keer.");
             }
+        } else {
+            System.out.println("❌ Je hebt geen KeyJoker gekozen.");
         }
 
-        if (antwoord.equals("keyjoker")) {
-            if (speler.heeftJoker() && speler.getGekozenJoker() instanceof KeyJoker keyJoker) {
-                if (keyJoker.magGebruikenInKamer(speler.getPositie())) {
-                    keyJoker.gebruik();
-                    System.out.println("🔑 Je hebt de KeyJoker gebruikt! De kamer wordt overgeslagen.");
-                    return true; // Slaat vraag over
-                } else {
-                    System.out.println("❌ De KeyJoker mag alleen in kamer 2 of 4 worden gebruikt en slechts één keer.");
-                }
-            } else {
-                System.out.println("❌ Je hebt geen KeyJoker gekozen.");
-            }
-            return false; // Beëindig vraag zonder goed antwoord
-        }
+        return false;
+    }
 
-        if (antwoord.equals("hintjoker")) {
-            if (speler.heeftJoker()) {
-                speler.gebruikJoker(speler.getPositie());
-                antwoord = scanner.nextLine().trim().toLowerCase();
-                return antwoord.equals(juistAntwoord);
-            } else {
-                System.out.println("Je hebt geen joker of je hebt hem al gebruikt.");
-                antwoord = scanner.nextLine().trim().toLowerCase();
-                return antwoord.equals(juistAntwoord);
-            }
+    private void verwerkHintJoker(Speler speler) {
+        if (speler.heeftJoker()) {
+            speler.gebruikJoker(speler.getPositie());
+        } else {
+            System.out.println("Je hebt geen joker of je hebt hem al gebruikt.");
         }
-
-        return antwoord.equals(juistAntwoord);
     }
 }

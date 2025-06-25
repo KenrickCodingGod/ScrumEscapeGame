@@ -27,11 +27,14 @@ public class Game {
     private void initialiseerKamers() {
         kamers.add(new Kamer(1, "Sprint Planning",
                 new InvulVraag("Wat is meestal het laatste op de planning als het gaat om coderen?", "testen"),
-                new Zwaard("Diamanten Zwaard", "🗡️ Je doet 10 hartjes damage!")
+                new Zwaard("Diamanten Zwaard", "🗡️ Je doet 10 hartjes damage!"),
+                new Boek("Sprint Strategieboek", "📘 Je ontdekt dat testen vaak het sluitstuk is van een goede planning.")
+
         ));
 
         kamers.add(new Kamer(2, "Daily Scrum",
                 new InvulVraag("Welke mensen zitten er ALTIJD bij de Daily Scrum?", "developers"),
+                new Zwaard("Stand-up Speer", "🗡️ Je prikt het monster door met de scherpte van dagelijkse communicatie!"),
                 new Boek("All wetende boek", " Je hebt geleerd dat het antwoord developers, product owners of scrum master is.")
         ));
 
@@ -42,17 +45,22 @@ public class Game {
                         "C) Epics en bugs",
                         "D) Review / testen"
                 }, "b"),
-                new Zwaard("Excalibur", "🗡️ Je vernietigt het monster met Excalibur!")
+                new Zwaard("Excalibur", "🗡️ Je vernietigt het monster met Excalibur!"),
+                new Boek("Scrum Bord Bijbel", "📘 Je leert dat persoonlijke agenda's niets te zoeken hebben op een professioneel Scrum Board.")
+
         ));
 
         kamers.add(new Kamer(4, "Sprint Review",
                 new InvulVraag("In welke phase van de Sprint vindt de Sprint Review plaats?", "einde"),
+                new Zwaard("Review Riek", "🗡️ Je steekt het monster neer met de scherpe feedback van stakeholders."),
                 new Boek("Scrum HandBoek", " Je hebt geleerd dat er 3 fases zijn: begin, midden en einde.")
         ));
 
         kamers.add(new Kamer(5, "Sprint Retrospective",
                 new InvulVraag("In een retrospective evalueer je 2 onderdelen. Eén is 'het proces', wat is de andere?", "samenwerking"),
-                new Zwaard("Katana", "🗡️ Je slaat het monster doormidden als in Fruit Ninja!")
+                new Zwaard("Katana", "🗡️ Je slaat het monster doormidden als in Fruit Ninja!"),
+                new Boek("Retro Reflector", "📘 Je leert dat samenwerking en proces beide geëvalueerd worden in een goede retrospective.")
+
         ));
 
         kamers.add(new KamerFinale(FINALE_KAMER_NUMMER));
@@ -77,6 +85,8 @@ public class Game {
         System.out.println("1. HintJoker (bruikbaar in alle kamers) *gebruik door 'hintjoker' te typen*");
         System.out.println("2. KeyJoker (bruikbaar in kamer 2 en 4) *gebruik door 'keyjoker' te typen*\n------------------------------");
         System.out.println("Gebruik een assistent in kamer 1 en 3 door 'gebruik assistent' te typen.");
+        System.out.println("Je kan ook een boek activeren tijdens elke fase van het spel door 'gebruik boek' te type");
+        System.out.println("Zwaard activeer je op dezelfde manier. Maar is niet altijd beschickbaar");
         System.out.println("Commando's: 'status', 'reset', 'ga naar kamer X'\n------------------------------");
     }
 
@@ -198,30 +208,46 @@ public class Game {
     }
 
     private boolean vraagOmVoorwerpGebruik(Kamer kamer, Monster monster) {
-        Object voorwerp = kamer.getVoorwerp();
+        Weapon zwaard = kamer.getZwaard();
+        Readable boek = kamer.getBoek();
 
-        if (voorwerp instanceof Weapon weapon) {
-            String naam = weapon.getNaam();
+        System.out.println("------------------------------\nEr is een monster verschenen: " + monster.getNaam() + "\nJe ziet de volgende items die je zouden kunnen helpen:\nzwaard (type 'gebruik zwaard')\nboek (type 'gebruik boek')\nje kan ook niets doen\n> ");
 
-            System.out.println("------------------------------");
-            System.out.print("Je hebt zwaard gevonden genaamd: '" + naam + "' wil je het gebruiken om " + monster.getNaam() +  " te verslaan?(ja/nee)\n------------------------------\n");
 
-            if (!scanner.nextLine().equalsIgnoreCase("ja")) {
+
+        String input = scanner.nextLine().toLowerCase();
+
+        switch (input) {
+            case "gebruik zwaard" -> {
+                if (zwaard != null) {
+                    System.out.println(zwaard.attack(monster));
+                    System.out.println("✅ Monster verslagen. Je mag de vraag opnieuw beantwoorden.");
+                    return true;
+                } else {
+                    System.out.println("❌ Je hebt geen zwaard.");
+                    return false;
+                }
+            }
+            case "gebruik boek" -> {
+                if (boek != null) {
+                    System.out.println("📖 " + boek.showMessage());
+                    System.out.println("ℹ️ Helaas helpt een boek niet tegen een monster :/.");
+                } else {
+                    System.out.println("❌ Je hebt geen boek.");
+                }
                 return false;
             }
-
-            System.out.println(weapon.attack(monster));
-            System.out.println("✅ Monster verslagen. Je mag de vraag opnieuw beantwoorden.");
-            return true;
-
-        } else if (voorwerp instanceof Readable) {
-            System.out.println("------------------------------");
-            System.out.println("ℹ️ Helaas helpt een boek niet tegen een monster :/.");
-            return false;
-
+            case "" -> {
+                System.out.println("⚠️ Je hebt het monster niet verslagen.");
+                return false;
+            }
+            default -> {
+                System.out.println("❌ Ongeldig commando.");
+                return vraagOmVoorwerpGebruik(kamer, monster); // probeer opnieuw
+            }
         }
-        return false;
     }
+
 
 
 

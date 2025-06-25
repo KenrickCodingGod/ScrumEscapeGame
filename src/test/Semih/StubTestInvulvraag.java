@@ -1,24 +1,36 @@
 package test.Semih;
 
 import game.Speler;
+import game.voorwerp.Boek;
+import game.voorwerp.Zwaard;
 import game.vraag.InvulVraag;
 import org.junit.jupiter.api.Test;
+import game.kamer.Kamer;
 
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StubTestInvulvraag  {
+class StubTestInvulvraag {
 
     @Test
     void testStelVraagMetStubAntwoordJuist() {
-        // Stub input (alsof gebruiker 'scrum' invult)
         String stubInput = "scrum\n";
         Scanner stubScanner = new Scanner(new ByteArrayInputStream(stubInput.getBytes()));
 
         InvulVraag vraag = new InvulVraag("Wat is het raamwerk/werkwijze dat we gebruiken?", "scrum", stubScanner);
-        boolean resultaat = vraag.stelVraag(new Speler()); // je mag ook null meegeven als speler niets doet
+        Speler speler = new Speler();
+
+        Kamer dummyKamer = new Kamer(
+                0,
+                "Dummy",
+                vraag,
+                new Zwaard("TestZwaard", "Test zwaard effect"),
+                new Boek("TestBoek", "Test boek boodschap")
+        );
+
+        boolean resultaat = vraag.stelVraag(speler, dummyKamer);
 
         assertTrue(resultaat, "De vraag zou als correct beantwoord moeten worden");
     }
@@ -29,7 +41,17 @@ class StubTestInvulvraag  {
         Scanner stubScanner = new Scanner(new ByteArrayInputStream(stubInput.getBytes()));
 
         InvulVraag vraag = new InvulVraag("Wat is het raamwerk/werkwijze dat we gebruiken?", "scrum", stubScanner);
-        boolean resultaat = vraag.stelVraag(new Speler());
+        Speler speler = new Speler();
+
+        Kamer dummyKamer = new Kamer(
+                0,
+                "Dummy",
+                vraag,
+                new Zwaard("TestZwaard", "Test zwaard effect"),
+                new Boek("TestBoek", "Test boek boodschap")
+        );
+
+        boolean resultaat = vraag.stelVraag(speler, dummyKamer);
 
         assertFalse(resultaat, "De vraag zou fout beantwoord moeten worden");
     }

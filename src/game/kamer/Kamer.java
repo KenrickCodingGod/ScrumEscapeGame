@@ -5,19 +5,21 @@ import game.voorwerp.Readable;
 import game.vraag.Vraag;
 import game.voorwerp.*;
 
-import java.util.Scanner;
+
 
 public class Kamer {
     private final int Kamernummer;
     private final String naam;
     protected final Vraag vraag;
-    private final Object voorwerp;
+    private final Weapon zwaard;
+    private final Readable boek;
 
-    public Kamer(int Kamernummer, String naam, Vraag vraag, Object voorwerp) {
-        this.Kamernummer = Kamernummer;
+    public Kamer(int kamerNummer, String naam, Vraag vraag, Weapon zwaard, Readable boek) {
+        this.Kamernummer = kamerNummer;
         this.naam = naam;
         this.vraag = vraag;
-        this.voorwerp = voorwerp;
+        this.zwaard = zwaard;
+        this.boek = boek;
     }
 
     public int getKamerNummer() {
@@ -28,21 +30,16 @@ public class Kamer {
         return naam;
     }
 
-    public Object getVoorwerp() {
-        return voorwerp;
+    public Weapon getZwaard() {
+        return zwaard;
+    }
+
+    public Readable getBoek() {
+        return boek;
     }
 
     public boolean voerUit(Speler speler) {
         System.out.println("Je bent in kamer " + Kamernummer + ": " + naam);
-
-        if (voorwerp instanceof Readable readable) {
-            System.out.println("Je hebt een boek gevonden in deze kamer. Wil je hem lezen? (ja/nee)");
-            Scanner scanner = new Scanner(System.in);
-            if (scanner.nextLine().equalsIgnoreCase("ja")) {
-                System.out.println("📖 " + readable.showMessage());
-            }
-        }
-
-        return vraag.stelVraag(speler);
+        return vraag.stelVraag(speler, this);
     }
 }

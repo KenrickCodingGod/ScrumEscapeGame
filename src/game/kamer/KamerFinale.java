@@ -1,6 +1,7 @@
 package game.kamer;
 
 import game.Speler;
+import game.voorwerp.Boek;
 import game.voorwerp.Zwaard;
 import game.vraag.MeerkeuzeVraag;
 
@@ -18,13 +19,14 @@ public class KamerFinale extends Kamer {
                         },
                         "b"
                 ),
-                new Zwaard("Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!")
+                new Zwaard("Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!"),
+                new Boek("g","g")
         );
     }
 
     public boolean voerUit(Speler speler) {
         System.out.println("Je bent in de kamer: " + getNaam());
-        boolean juist = vraag.stelVraag(speler);
+        boolean juist = vraag.stelVraag(speler, this);
         if (juist) {
             System.out.println("✅ Geweldig! Je hebt het Scrum Escape Game gewonnen!");
         } else {
