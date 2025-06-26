@@ -13,18 +13,18 @@ class StubTestGameStatusObserver {
 
     @Test
     void testObserverGeeftJuisteStatusTerugMetMonster() {
-        // Arrange (maak een stub Speler)
+       
         Speler stubSpeler = mock(Speler.class);
         when(stubSpeler.getPositie()).thenReturn(2);
         when(stubSpeler.getMonsters()).thenReturn(List.of(new Monster("Zombie")));
 
         GameStatusObserver observer = new GameStatusObserver();
 
-        // Act
+        
         observer.update(stubSpeler);
         GameStatus status = observer.getStatus();
 
-        // Assert
+       
         assertEquals(2, status.positie);
         assertEquals("Zombie", status.laatsteMonster);
     }
