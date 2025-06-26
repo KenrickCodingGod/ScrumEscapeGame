@@ -27,6 +27,13 @@ public class Speler {
 
         this.positie = positie;
         notifyObservers();
+
+        for (SpelerObserver observer : observers) {
+            if (observer instanceof GameStatusObserver statusObserver) {
+                GameStatusView view = new GameStatusView();
+                view.toonStatus(statusObserver.getStatus());
+            }
+        }
     }
 
     public List<Monster> getMonsters() {
