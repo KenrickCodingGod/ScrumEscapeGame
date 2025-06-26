@@ -1,1 +1,12 @@
+package game.view;
+
+import game.Monster;
+
+public class MonsterView {
+    public void toonMonster(Monster monster) {
+        System.out.println("------------------------------");
+        System.out.println("🧟‍♂️ Monster opgeroepen: " + monster.getNaam());
+        System.out.println("💬 Uitleg: " + monster.getUitleg());
+    }
+}
 
