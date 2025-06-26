@@ -1,24 +1,22 @@
 package game.assistent;
 
-public class HintAssistent {
-    private int kamerPositie;
+import game.Speler;
 
-    public HintAssistent(int kamerPositie) {
-        this.kamerPositie = kamerPositie;
+public class HintAssistent implements AssistentComponent {
+    private final Speler speler;
+
+    public HintAssistent(Speler speler) {
+        this.speler = speler;
     }
 
+    @Override
+    public void activeer() {
+        int kamerPositie = speler.getHuidigeKamer().getKamerNummer();
 
-    public void voerUit() {
         switch (kamerPositie) {
-            case 0:
-                System.out.println("💡 Hint: Denk aan de drie Scrumrollen en hun verantwoordelijkheden.");
-                break;
-            case 2:
-                System.out.println("💡 Hint: Denk aan hoe het team zich aanpast aan veranderingen tijdens de sprint.");
-                break;
-            default:
-                System.out.println("💡 Hint: Algemeen Scrumprincipe.");
-                break;
+            case 1 -> System.out.println("💡 Hint: Denk aan de drie Scrumrollen en hun verantwoordelijkheden.");
+            case 3 -> System.out.println("💡 Hint: Denk aan hoe het team zich aanpast aan veranderingen tijdens de sprint.");
+            default -> System.out.println("💡 Hint: Algemeen Scrumprincipe.");
         }
     }
 }

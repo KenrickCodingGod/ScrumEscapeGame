@@ -35,11 +35,6 @@ class MockCommandTest {
         }
 
         @Override
-        public void gebruik() {
-
-        }
-
-        @Override
         public boolean magGebruikenInKamer(int kamerNummer) {
             return false;
         }

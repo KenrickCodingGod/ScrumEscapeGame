@@ -16,12 +16,19 @@ public class Speler {
     private final List<SpelerObserver> observers = new ArrayList<>();
     private Joker gekozenJoker;
     private boolean jokerGebruikt = false;
-    
+    private boolean kamerOvergeslagen = false;
 
     public Kamer getHuidigeKamer() {
         return huidigeKamer;
     }
 
+    public void setKamerOvergeslagen(boolean overgeslagen) {
+        this.kamerOvergeslagen = overgeslagen;
+    }
+
+    public boolean isKamerOvergeslagen() {
+        return kamerOvergeslagen;
+    }
 
     public void setHuidigeKamer(Kamer kamer) {
         this.huidigeKamer = kamer;

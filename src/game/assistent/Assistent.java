@@ -1,20 +1,18 @@
 package game.assistent;
 
-public class Assistent {
-    private final HintAssistent hint;
-    private final EducatiefHulpmiddel hulpmiddel;
-    private final Motivator motivator;
+import java.util.List;
 
-    public Assistent(HintAssistent hint, EducatiefHulpmiddel hulpmiddel, Motivator motivator) {
-        this.hint = hint;
-        this.hulpmiddel = hulpmiddel;
-        this.motivator = motivator;
+public class Assistent {
+    private final List<AssistentComponent> componenten;
+
+    public Assistent(List<AssistentComponent> componenten) {
+        this.componenten = componenten;
     }
 
     public void activeer() {
         System.out.println("🧑‍💻 Assistent geactiveerd!");
-        hint.voerUit();
-        hulpmiddel.toon();
-        motivator.toonMelding();
+        for (AssistentComponent component : componenten) {
+            component.activeer();
+        }
     }
 }

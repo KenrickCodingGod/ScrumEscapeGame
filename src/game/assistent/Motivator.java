@@ -2,7 +2,7 @@ package game.assistent;
 
 import java.util.Random;
 
-public class Motivator {
+public class Motivator implements AssistentComponent {
     private static final String[] boodschappen = {
             "💪 Je denkt als een echte product owner!",
             "🚀 Goed bezig, hou dit vast!",
@@ -12,7 +12,8 @@ public class Motivator {
             "🦸‍♂️ You got this!"
     };
 
-    public void toonMelding() {
+    @Override
+    public void activeer() {
         String boodschap = boodschappen[new Random().nextInt(boodschappen.length)];
         System.out.println("🎯 Motivatie: " + boodschap);
     }

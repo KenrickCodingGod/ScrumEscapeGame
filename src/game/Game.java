@@ -106,7 +106,7 @@ public class Game {
         System.out.print(">> ");
         String gekozenjoker = scanner.nextLine();
         if (gekozenjoker.equals("1")) {
-            CommandUitvoerder.voerUit(new KiesJokerCommand(speler, new HintJoker()));
+            CommandUitvoerder.voerUit(new KiesJokerCommand(speler, new HintJoker(new DefaultHintProvider())));
             System.out.println("Je hebt gekozen voor de HintJoker.");
         }
         else if (gekozenjoker.equals("2")) {
@@ -133,12 +133,13 @@ public class Game {
     private void gebruikAssistent() {
         int kamerNr = speler.getHuidigeKamer().getKamerNummer();
         if (kamerNr == 1 || kamerNr == 3) {
-            Assistent assistent = new Assistent(
-                    new HintAssistent(kamerNr),
+            Assistent assistent = new Assistent(List.of(
+                    new HintAssistent(speler),
                     new StappenplanHulpmiddel(),
                     new Motivator()
-            );
+            ));
             assistent.activeer();
+
         } else {
             System.out.println("❌ In deze kamer is geen assistent beschikbaar.");
         }
