@@ -13,7 +13,7 @@ public class Kamer {
     private final Weapon zwaard;
     private final Readable boek;
     private final String hint;
-    private final Monster monster;
+    private Monster monster;
 
     public Kamer(int kamerNummer, String naam, Vraag vraag, Weapon zwaard, Readable boek, String hint, Monster monster) {
         this.kamerNummer = kamerNummer;
@@ -53,4 +53,5 @@ public class Kamer {
         System.out.println("Je bent in kamer " + kamerNummer + ": " + naam);
         return vraag.stelVraag(speler, this);
     }
+
 }
