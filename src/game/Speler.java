@@ -1,6 +1,9 @@
 package game;
 
 import game.joker.Joker;
+import game.observer.GameStatus;
+import game.observer.GameStatusObserver;
+import game.observer.GameStatusView;
 import game.observer.SpelerObserver;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,7 @@ public class Speler {
     public void setPositie(int positie) {
 
         this.positie = positie;
-        notifyObservers(); // meld aan observeers
+        notifyObservers();
     }
 
     public List<Monster> getMonsters() {
