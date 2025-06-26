@@ -3,15 +3,19 @@ package game.observer;
 import game.Speler;
 
 public class GameStatusObserver implements SpelerObserver {
+    private GameStatus status;
+
+    @Override
     public void update(Speler speler) {
-        System.out.println("------------------------------\n📍 Je bent nu in kamer: " + speler.getPositie());
+        String monsterNaam = speler.getMonsters().isEmpty()
+                ? "Geen actieve monsters."
+                : speler.getMonsters().get(speler.getMonsters().size() - 1).getNaam();
 
-        if (!speler.getMonsters().isEmpty()) {
-            System.out.println("🧟‍♂️ Monster: " + speler.getMonsters().get(speler.getMonsters().size() - 1).getNaam());
-        } else {
-            System.out.println("🧟‍♂️ Monster: Geen actieve monsters.");
-        }
+        status = new GameStatus(speler.getPositie(), monsterNaam);
+    }
 
-        System.out.println("🚪 Je hebt toegang tot kamer: " + (speler.getPositie() + 1)+ "\n------------------------------");
+    public GameStatus getStatus() {
+        return status;
     }
 }
+
