@@ -5,6 +5,7 @@ import game.Speler;
 import game.command.CommandUitvoerder;
 import game.command.SetPositieCommand;
 import game.command.VoegMonsterToeCommand;
+import game.kamer.Kamer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,17 +15,17 @@ import java.util.List;
 class StubCommandTest {
 
     static class StubSpeler extends Speler {
-        private int positie;
+        private Kamer huidigeKamer;
         private List<Monster> monsters = new ArrayList<>();
 
         @Override
-        public void setPositie(int positie) {
-            this.positie = positie;
+        public void setHuidigeKamer(Kamer kamer){
+            this.huidigeKamer = kamer;
         }
 
         @Override
-        public int getPositie() {
-            return this.positie;
+        public Kamer getHuidigeKamer() {
+            return huidigeKamer;
         }
 
         @Override
@@ -41,8 +42,9 @@ class StubCommandTest {
     @Test
     void testSetPositieCommandMetStub() {
         StubSpeler speler = new StubSpeler();
-        CommandUitvoerder.voerUit(new SetPositieCommand(speler, 7));
-        assertEquals(7, speler.getPositie());
+        Kamer kamer = new Kamer(7, "Test Kamer", null, null, null, null, null);
+        CommandUitvoerder.voerUit(new SetPositieCommand(speler, kamer));
+        assertEquals(kamer, speler.getHuidigeKamer());
     }
 
     @Test

@@ -20,22 +20,26 @@ public class Game {
 
     public Game() {
         speler = new Speler();
-        speler.voegObserverToe(new GameStatusObserver());
         initialiseerKamers();
+        speler.setHuidigeKamer(kamers.getFirst());
+        speler.voegObserverToe(new GameStatusObserver());
     }
 
     private void initialiseerKamers() {
         kamers.add(new Kamer(1, "Sprint Planning",
                 new InvulVraag("Wat is meestal het laatste op de planning als het gaat om coderen?", "testen"),
                 new Zwaard("Diamanten Zwaard", "🗡️ Je doet 10 hartjes damage!"),
-                new Boek("Sprint Strategieboek", "📘 Je ontdekt dat testen vaak het sluitstuk is van een goede planning.")
-
+                new Boek("Sprint Strategieboek", "📘 Je ontdekt dat testen vaak het sluitstuk is van een goede planning."),
+                "HelpHint: Wat doen developers aan het einde van hun process?",
+                new Monster("Scopezilla", "Te veel werk zonder afstemming toegevoegd.")
         ));
 
         kamers.add(new Kamer(2, "Daily Scrum",
                 new InvulVraag("Welke mensen zitten er ALTIJD bij de Daily Scrum?", "developers"),
                 new Zwaard("Stand-up Speer", "🗡️ Je prikt het monster door met de scherpte van dagelijkse communicatie!"),
-                new Boek("All wetende boek", " Je hebt geleerd dat het antwoord developers, product owners of scrum master is.")
+                new Boek("All wetende boek", "Je hebt geleerd dat het antwoord developers, product owners of scrum master is."),
+                "HelpHint: Wie werken er dagelijks aan de code / project?",
+                new Monster("TeamStilte Zombie", "Je team communiceert niet goed.")
         ));
 
         kamers.add(new Kamer(3, "Scrum Board",
@@ -46,8 +50,9 @@ public class Game {
                         "D) Review / testen"
                 }, "b"),
                 new Zwaard("Excalibur", "🗡️ Je vernietigt het monster met Excalibur!"),
-                new Boek("Scrum Bord Bijbel", "📘 Je leert dat persoonlijke agenda's niets te zoeken hebben op een professioneel Scrum Board.")
-
+                new Boek("Scrum Bord Bijbel", "📘 Je leert dat persoonlijke agenda's niets te zoeken hebben op een professioneel Scrum Board."),
+                "HelpHint: Is dit een werkbord of persoonlijke planner?",
+                new Monster("Chaos Tornado", "Geen overzicht op de taken.")
         ));
 
         kamers.add(new Kamer(4, "Sprint Review",
@@ -58,30 +63,32 @@ public class Game {
                         "A3 B1 C2"
                 ),
                 new Zwaard("Review Riek", "🗡️ Je steekt het monster neer met de scherpe feedback van stakeholders."),
-                new Boek("Scrum HandBoek", " Je hebt geleerd dat er 3 fases zijn: begin, midden en einde.")
+                new Boek("Scrum HandBoek", "Je hebt geleerd dat er 3 fases zijn: begin, midden en einde."),
+                "HelpHint: Kijk goed naar de antwoorden.",
+                new Monster("FeedbackFobie", "Stakeholders snappen het resultaat niet.")
         ));
 
         kamers.add(new Kamer(5, "Sprint Retrospective",
                 new InvulVraag("In een retrospective evalueer je 2 onderdelen. Eén is 'het proces', wat is de andere?", "samenwerking"),
                 new Zwaard("Katana", "🗡️ Je slaat het monster doormidden als in Fruit Ninja!"),
-                new Boek("Retro Reflector", "📘 Je leert dat samenwerking en proces beide geëvalueerd worden in een goede retrospective.")
-
+                new Boek("Retro Reflector", "📘 Je leert dat samenwerking en proces beide geëvalueerd worden in een goede retrospective."),
+                "HelpHint: Denk aan samenwerking in het team.",
+                new Monster("LoopSpook", "Je leert niet van fouten.")
         ));
 
         kamers.add(new KamerFinale(FINALE_KAMER_NUMMER));
     }
 
+
     public void start() {
         toonIntroductie();
         kiesJoker();
 
-        while (speler.getPositie() < kamers.size()) {
+        while (true) {
             System.out.print(">> ");
             String input = scanner.nextLine().toLowerCase();
             verwerkInput(input);
         }
-
-        System.out.println("🎉 Je hebt alle kamers doorlopen!");
     }
 
     private void toonIntroductie() {
@@ -124,10 +131,10 @@ public class Game {
     }
 
     private void gebruikAssistent() {
-        int positie = speler.getPositie();
-        if (positie == 0 || positie == 2) {
+        int kamerNr = speler.getHuidigeKamer().getKamerNummer();
+        if (kamerNr == 1 || kamerNr == 3) {
             Assistent assistent = new Assistent(
-                    new HintAssistent(positie),
+                    new HintAssistent(kamerNr),
                     new StappenplanHulpmiddel(),
                     new Motivator()
             );
@@ -136,6 +143,7 @@ public class Game {
             System.out.println("❌ In deze kamer is geen assistent beschikbaar.");
         }
     }
+
 
     private void verwerkKamerBezoek(String input) {
         try {
@@ -156,14 +164,20 @@ public class Game {
 
     private void verwerkVoltooideKamer() {
         System.out.println("Goedzo ga zo door!");
-        CommandUitvoerder.voerUit(new SetPositieCommand(speler, speler.getPositie() + 1));
-
+        int huidigeIndex = kamers.indexOf(speler.getHuidigeKamer());
+        if (huidigeIndex + 1 < kamers.size()) {
+            speler.setHuidigeKamer(kamers.get(huidigeIndex + 1));
+        } else {
+            System.out.println("🎉 Je hebt alle kamers doorlopen!");
+            System.exit(0);
+        }
     }
 
 
     private void bezoekKamer(Kamer kamer) {
-        if (kamer.getKamerNummer() != speler.getPositie() + 1) {
-            System.out.println("🚫 Je mag alleen naar de eerstvolgende kamer: " + (speler.getPositie() + 1));
+        int verwachteKamer = kamers.indexOf(speler.getHuidigeKamer()) + 1;
+        if (kamer.getKamerNummer() != verwachteKamer) {
+            System.out.println("🚫 Je mag alleen naar de eerstvolgende kamer: " + verwachteKamer);
             return;
         }
 
@@ -173,11 +187,11 @@ public class Game {
             return;
         }
 
-        Monster monster = bepaalMonsterVoorKamer(kamer.getKamerNummer());
+        Monster monster = kamer.getMonster();
         CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, monster));
 
         if (vraagOmHint(kamer)) {
-            toonHintVoorKamer(kamer.getKamerNummer());
+            toonHintVoorKamer(kamer);
         }
 
         if (vraagOmVoorwerpGebruik(kamer, monster)) {
@@ -195,21 +209,12 @@ public class Game {
         return scanner.nextLine().equalsIgnoreCase("ja");
     }
 
-    private void toonHintVoorKamer(int kamerNummer) {
-        String inhoudelijkeHint = switch (kamerNummer) {
-            case 1 -> "HelpHint: Wat doen developers aan het einde van hun process?";
-            case 2 -> "HelpHint: Wie werken er dagelijks aan de code / project?";
-            case 3 -> "HelpHint: Is dit een werkbord of persoonlijke planner?";
-            case 4 -> "HelpHint: Kijk goed naar de antwoorden.";
-            case 5 -> "HelpHint: Denk aan samenwerking in het team.";
-            case 6 -> "HelpHint: Wat betekent TIA binnen Scrum?";
-            default -> "HelpHint: Gebruik je Scrum-kennis goed!";
-        };
-
+    private void toonHintVoorKamer(Kamer kamer) {
         HintFactory hintFactory = new HintFactory();
-        Hint hint = hintFactory.getRandomProvider(inhoudelijkeHint).geefHint();
+        Hint hint = hintFactory.getRandomProvider(kamer.getHint()).geefHint();
         System.out.println(hint.geefHint());
     }
+
 
     private boolean vraagOmVoorwerpGebruik(Kamer kamer, Monster monster) {
         Weapon zwaard = kamer.getZwaard();
@@ -260,29 +265,9 @@ public class Game {
     }
 
     private void toonStatus() {
+        Kamer kamer = speler.getHuidigeKamer();
         System.out.println("\n--- SPELER STATUS ---");
-        int index = speler.getPositie();
-        System.out.println("Kamer " + (index + 1) + " van " + kamers.size());
-
-        if (index < kamers.size()) {
-            System.out.println("Huidige kamer: " + kamers.get(index).getNaam());
-        } else {
-            System.out.println("Je hebt het spel voltooid!");
-        }
-
-        System.out.println("Kamers voltooid: " + index);
+        System.out.println("Kamer " + (kamer.getKamerNummer()-1) + " van " + kamers.size());
         System.out.println("Actieve monsters: " + speler.getMonsterNamenAlsString());
-    }
-
-    private Monster bepaalMonsterVoorKamer(int kamerNummer) {
-        return switch (kamerNummer) {
-            case 1 -> new Monster("Scopezilla", "Te veel werk zonder afstemming toegevoegd.");
-            case 2 -> new Monster("TeamStilte Zombie", "Je team communiceert niet goed.");
-            case 3 -> new Monster("Chaos Tornado", "Geen overzicht op de taken.");
-            case 4 -> new Monster("FeedbackFobie", "Stakeholders snappen het resultaat niet.");
-            case 5 -> new Monster("LoopSpook", "Je leert niet van fouten.");
-            case 6 -> new Monster("TIAverslinder", "Je bent de kern van Scrum vergeten: TIA.");
-            default -> new Monster("Onbekend", "Onbekende fout.");
-        };
     }
 }

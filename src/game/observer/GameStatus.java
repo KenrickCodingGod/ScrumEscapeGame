@@ -1,11 +1,13 @@
 package game.observer;
 
 public class GameStatus {
-    public final int positie;
+    public final String kamerNaam;
+    public final int kamerNummer;
     public final String laatsteMonster;
 
-    public GameStatus(int positie, String laatsteMonster) {
-        this.positie = positie;
+    public GameStatus(String kamerNaam, int kamerNummer, String laatsteMonster) {
+        this.kamerNaam = kamerNaam;
+        this.kamerNummer = kamerNummer;
         this.laatsteMonster = laatsteMonster;
     }
 }

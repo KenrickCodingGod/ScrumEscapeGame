@@ -1,5 +1,6 @@
 package game.kamer;
 
+import game.Monster;
 import game.Speler;
 import game.voorwerp.Boek;
 import game.voorwerp.Zwaard;
@@ -11,7 +12,7 @@ public class KamerFinale extends Kamer {
                 nummer,
                 "Finale Kamer",
                 new MeerkeuzeVraag(
-                        "Waar staat TIA voor in scrum?",
+                        "Waar staat TIA voor in Scrum?",
                         new String[]{
                                 "A) Team, Instructie, en Activiteit",
                                 "B) Transparantie, Inspectie en Aanpassing",
@@ -19,10 +20,13 @@ public class KamerFinale extends Kamer {
                         },
                         "b"
                 ),
-                new Zwaard("Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!"),
-                new Boek("g","g")
+                new Zwaard("Ottomaanse Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!"),
+                new Boek("Scrum Geheimen", "📘 Je ontdekt dat TIA draait om transparantie, inspectie en aanpassing."),
+                "HelpHint: Denk aan de kernwaarden van Scrum bij het beantwoorden van de vraag.",
+                new Monster("TIAverslinder", "De ultieme vijand die de kern van Scrum vergeet!")
         );
     }
+
 
     public boolean voerUit(Speler speler) {
         System.out.println("Je bent in de kamer: " + getNaam());

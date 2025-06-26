@@ -1,35 +1,41 @@
 package game;
 
 import game.joker.Joker;
-import game.observer.GameStatus;
+import game.kamer.Kamer;
 import game.observer.GameStatusObserver;
 import game.observer.GameStatusView;
 import game.observer.SpelerObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Speler {
-    private int positie = 0;
+    private Kamer huidigeKamer;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<SpelerObserver> observers = new ArrayList<>();
     private Joker gekozenJoker;
     private boolean jokerGebruikt = false;
+    private int laatsteVoltooideKamerIndex = 0;
 
-
-    public int getPositie() {
-
-        return positie;
-
+    public Kamer getHuidigeKamer() {
+        return huidigeKamer;
+    }
+    public int getLaatsteVoltooideKamerIndex() {
+        return laatsteVoltooideKamerIndex;
     }
 
-    public void setPositie(int positie) {
+    public void setLaatsteVoltooideKamerIndex(int index) {
+        this.laatsteVoltooideKamerIndex = index;
+    }
 
-        this.positie = positie;
+    public void setHuidigeKamer(Kamer kamer) {
+        this.huidigeKamer = kamer;
         notifyObservers();
 
         for (SpelerObserver observer : observers) {
             if (observer instanceof GameStatusObserver statusObserver) {
+
                 GameStatusView view = new GameStatusView();
                 view.toonStatus(statusObserver.getStatus());
             }
@@ -43,7 +49,7 @@ public class Speler {
     public void voegMonsterToe(Monster monster) {
         monsters.add(monster);
         monster.toonMonster();
-        notifyObservers(); // meld wijziging aan observers
+        notifyObservers();
     }
 
     public String getMonsterNamenAlsString() {
@@ -74,7 +80,6 @@ public class Speler {
         return gekozenJoker;
     }
 
-    //oserver functionaliteit
     public void voegObserverToe(SpelerObserver observer) {
         observers.add(observer);
     }

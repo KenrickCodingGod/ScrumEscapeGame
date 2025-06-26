@@ -1,5 +1,6 @@
 package test.Semih;
 
+import game.Monster;
 import game.Speler;
 import game.voorwerp.Boek;
 import game.voorwerp.Zwaard;
@@ -26,7 +27,9 @@ class StubTestInvulvraag {
                 "Dummy",
                 vraag,
                 new Zwaard("TestZwaard", "Test zwaard effect"),
-                new Boek("TestBoek", "Test boek boodschap")
+                new Boek("TestBoek", "Test boek boodschap"),
+                "testHint",
+                new Monster("testMonster", "testUitleg")
         );
 
         boolean resultaat = vraag.stelVraag(speler, dummyKamer);
@@ -47,7 +50,9 @@ class StubTestInvulvraag {
                 "Dummy",
                 vraag,
                 new Zwaard("TestZwaard", "Test zwaard effect"),
-                new Boek("TestBoek", "Test boek boodschap")
+                new Boek("TestBoek", "Test boek boodschap"),
+                "testHint",
+                new Monster("testMonster", "testUitleg")
         );
 
         boolean resultaat = vraag.stelVraag(speler, dummyKamer);

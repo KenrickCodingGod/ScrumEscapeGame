@@ -9,12 +9,12 @@ public class HintJoker implements Joker {
     private static final Map<Integer, String> hintsPerKamer = new HashMap<>();
 
     static {
-        hintsPerKamer.put(0, "Sprint Planning: Hoe check je fouten? Door te ......");
-        hintsPerKamer.put(1, "Daily Scrum: Wat noem je een groep mensen die coderen?");
-        hintsPerKamer.put(2, "Scrum Board: Iets hoort hier echt niet thuis...");
-        hintsPerKamer.put(3, "Sprint Review: Denk aan de rollen en hun taak.");
-        hintsPerKamer.put(4, "Retrospective: Unscramble het antwoord! : wsanmenerikg");
-        hintsPerKamer.put(5, "Finale: Gebruik je alle kennis uit vorige kamers?");
+        hintsPerKamer.put(1, "Sprint Planning: Hoe check je fouten? Door te ......");
+        hintsPerKamer.put(2, "Daily Scrum: Wat noem je een groep mensen die coderen?");
+        hintsPerKamer.put(3, "Scrum Board: Iets hoort hier echt niet thuis...");
+        hintsPerKamer.put(4, "Sprint Review: Denk aan de rollen en hun taak.");
+        hintsPerKamer.put(5, "Retrospective: Unscramble het antwoord! : wsanmenerikg");
+        hintsPerKamer.put(6, "Finale: Gebruik je alle kennis uit vorige kamers?");
     }
 
     @Override
