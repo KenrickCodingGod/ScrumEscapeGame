@@ -6,6 +6,7 @@ import game.command.CommandUitvoerder;
 import game.command.SetPositieCommand;
 import game.command.VoegMonsterToeCommand;
 import game.kamer.Kamer;
+import game.kamer.NormaleKamer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +43,7 @@ class StubCommandTest {
     @Test
     void testSetPositieCommandMetStub() {
         StubSpeler speler = new StubSpeler();
-        Kamer kamer = new Kamer(7, "Test Kamer", null, null, null, null, null);
+        Kamer kamer = new NormaleKamer(7, "Test Kamer", null, null, null, null, null);
         CommandUitvoerder.voerUit(new SetPositieCommand(speler, kamer));
         assertEquals(kamer, speler.getHuidigeKamer());
     }

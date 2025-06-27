@@ -2,6 +2,7 @@ package test.Semih;
 
 import game.Monster;
 import game.Speler;
+import game.kamer.NormaleKamer;
 import game.voorwerp.Boek;
 import game.voorwerp.Zwaard;
 import game.vraag.InvulVraag;
@@ -22,7 +23,7 @@ class StubTestInvulvraag {
         InvulVraag vraag = new InvulVraag("Wat is het raamwerk/werkwijze dat we gebruiken?", "scrum", stubScanner);
         Speler speler = new Speler();
 
-        Kamer dummyKamer = new Kamer(
+        Kamer dummyKamer = new NormaleKamer(
                 0,
                 "Dummy",
                 vraag,
@@ -45,7 +46,7 @@ class StubTestInvulvraag {
         InvulVraag vraag = new InvulVraag("Wat is het raamwerk/werkwijze dat we gebruiken?", "scrum", stubScanner);
         Speler speler = new Speler();
 
-        Kamer dummyKamer = new Kamer(
+        Kamer dummyKamer = new NormaleKamer(
                 0,
                 "Dummy",
                 vraag,
