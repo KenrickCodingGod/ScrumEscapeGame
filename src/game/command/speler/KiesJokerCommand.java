@@ -1,9 +1,10 @@
-package game.command;
+package game.command.speler;
 
 import game.Speler;
+import game.command.Command;
 import game.joker.Joker;  // Zorg dat je dit importeert!
 
-public class KiesJokerCommand implements SpelerCommand {
+public class KiesJokerCommand implements Command {
     private final Speler speler;
     private final Joker joker;
 
@@ -13,7 +14,7 @@ public class KiesJokerCommand implements SpelerCommand {
     }
 
     @Override
-    public void execute() {
+    public void voerUit() {
         speler.kiesJoker(joker);
     }
 }

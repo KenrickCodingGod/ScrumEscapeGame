@@ -21,6 +21,11 @@ public class Speler {
     private boolean jokerGebruikt = false;
     private boolean kamerOvergeslagen = false;
 
+    private List<Kamer> alleKamers;
+
+    public void setAlleKamers(List<Kamer> kamers) { this.alleKamers = kamers; }
+    public List<Kamer> getAlleKamers() { return this.alleKamers; }
+
     public Kamer getHuidigeKamer() {
         return huidigeKamer;
     }

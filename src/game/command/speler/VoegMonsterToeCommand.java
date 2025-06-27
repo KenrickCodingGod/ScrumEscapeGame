@@ -1,9 +1,10 @@
-package game.command;
+package game.command.speler;
 
 import game.Speler;
 import game.Monster;
+import game.command.Command;
 
-public class VoegMonsterToeCommand implements SpelerCommand {
+public class VoegMonsterToeCommand implements Command {
     private final Speler speler;
     private final Monster monster;
 
@@ -13,7 +14,7 @@ public class VoegMonsterToeCommand implements SpelerCommand {
     }
 
     @Override
-    public void execute() {
+    public void voerUit() {
         speler.voegMonsterToe(monster);
     }
 }

@@ -2,8 +2,8 @@
 
 import game.Speler;
 import game.command.CommandUitvoerder;
-import game.command.GebruikJokerCommand;
-import game.command.KiesJokerCommand;
+import game.command.speler.GebruikJokerCommand;
+import game.command.speler.KiesJokerCommand;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

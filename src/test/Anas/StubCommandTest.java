@@ -3,8 +3,8 @@
 import game.Monster;
 import game.Speler;
 import game.command.CommandUitvoerder;
-import game.command.SetPositieCommand;
-import game.command.VoegMonsterToeCommand;
+import game.command.speler.SetPositieCommand;
+import game.command.speler.VoegMonsterToeCommand;
 import game.kamer.Kamer;
 import game.kamer.NormaleKamer;
 import org.junit.jupiter.api.Test;

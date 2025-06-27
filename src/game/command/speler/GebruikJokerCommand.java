@@ -1,9 +1,10 @@
-package game.command;
+package game.command.speler;
 
 import game.Speler;
+import game.command.Command;
 import game.kamer.Kamer;
 
-public class GebruikJokerCommand implements SpelerCommand {
+public class GebruikJokerCommand implements Command {
     private final Speler speler;
     private final Kamer kamer;
 
@@ -13,7 +14,7 @@ public class GebruikJokerCommand implements SpelerCommand {
     }
 
     @Override
-    public void execute() {
+    public void voerUit() {
         speler.gebruikJoker(kamer);
     }
 }
