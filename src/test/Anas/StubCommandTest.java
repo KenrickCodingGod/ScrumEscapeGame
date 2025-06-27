@@ -1,4 +1,4 @@
-/*package test.Anas;
+package test.Anas;
 
 import game.Monster;
 import game.Speler;
@@ -43,7 +43,7 @@ class StubCommandTest {
     @Test
     void testSetPositieCommandMetStub() {
         StubSpeler speler = new StubSpeler();
-        Kamer kamer = new NormaleKamer(7, "Test Kamer", null, null, null, null, null);
+        Kamer kamer = new NormaleKamer(7, "Test Kamer", null, null, null, null, null, null, false, false);
         CommandUitvoerder.voerUit(new SetPositieCommand(speler, kamer));
         assertEquals(kamer, speler.getHuidigeKamer());
     }
@@ -55,4 +55,4 @@ class StubCommandTest {
         CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, m));
         assertTrue(speler.getMonsters().contains(m));
     }
-}*/
+}

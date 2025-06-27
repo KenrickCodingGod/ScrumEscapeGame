@@ -28,8 +28,8 @@ public class GameEngine {
         this.ui = ui;
         this.kamers = kamerFactory.maakKamers();
         this.speler = new Speler();
-        speler.setHuidigeKamer(kamers.getFirst());
-        speler.voegObserverToe(new GameStatusObserver());
+        speler.setHuidigeKamer(null);
+        speler.attach(new GameStatusObserver());
     }
 
     public void start() {
@@ -84,8 +84,8 @@ public class GameEngine {
 
     public void resetSpel() {
         speler = new Speler();
-        speler.setHuidigeKamer(kamers.getFirst());
-        speler.voegObserverToe(new GameStatusObserver());
+        speler.setHuidigeKamer(null);
+        speler.attach(new GameStatusObserver());
         ui.toon("🔁 Spel wordt opnieuw gestart...\n");
         start();
     }
@@ -108,33 +108,40 @@ public class GameEngine {
 
     public void verwerkKamerBezoek(String input) {
         try {
-            int kamerNr = Integer.parseInt(input.replaceAll("\\D+", ""));
-            Optional<Kamer> kamerOpt = kamers.stream()
-                    .filter(k -> k.getKamerNummer() == kamerNr)
-                    .findFirst();
+            int index = Integer.parseInt(input.replaceAll("\\D+", "")) - 1; // "kamer 2" → index 1
 
-            if (kamerOpt.isPresent()) {
-                bezoekKamer(kamerOpt.get());
-            } else {
+
+            if (index < 0 || index >= kamers.size()) {
                 ui.toon("⚠️ Deze kamer bestaat niet.");
+                return;
             }
+
+            Kamer kamer = kamers.get(index);
+            bezoekKamer(kamer);
         } catch (NumberFormatException e) {
             ui.toon("⚠️ Ongeldige invoer.");
         }
     }
 
+
+
     private void bezoekKamer(Kamer kamer) {
-        int verwachteKamer = kamers.indexOf(speler.getHuidigeKamer()) + 1;
-        if (kamer.getKamerNummer() != verwachteKamer) {
-            ui.toon("🚫 Je mag alleen naar de eerstvolgende kamer: " + verwachteKamer);
+        int huidigeIndex = speler.getHuidigeKamer() == null ? -1 : kamers.indexOf(speler.getHuidigeKamer());
+        int doelIndex = kamers.indexOf(kamer);
+
+        if (doelIndex != huidigeIndex + 1) {
+            ui.toon("🚫 Je mag alleen naar de eerstvolgende kamer: " + (huidigeIndex + 2));
             return;
         }
 
+
         boolean correct = kamer.voerUit(speler);
         if (correct) {
+            speler.setHuidigeKamer(kamer);
             verwerkVoltooideKamer();
             return;
         }
+
 
         Monster monster = kamer.getMonster();
         CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, monster));
@@ -143,12 +150,27 @@ public class GameEngine {
             toonHintVoorKamer(kamer);
         }
 
-        if (vraagOmVoorwerpGebruik(kamer, monster)) {
-            boolean opnieuwJuist = kamer.voerUit(speler);
-            if (opnieuwJuist) verwerkVoltooideKamer();
-        } else {
-            ui.toon("⚠️ Je hebt het monster niet verslagen. Probeer later opnieuw.");
+
+        boolean monsterVerslagen = false;
+        while (!monsterVerslagen) {
+            monsterVerslagen = vraagOmVoorwerpGebruik(kamer, monster);
+            if (!monsterVerslagen) {
+                ui.toon("🛑 Monster niet verslagen. Probeer nogmaals.");
+            }
         }
+
+
+        boolean opnieuwJuist = false;
+        while (!opnieuwJuist) {
+            ui.toon("Probeer nu opnieuw de vraag te beantwoorden:");
+            opnieuwJuist = kamer.voerUit(speler);
+            if (!opnieuwJuist) {
+                ui.toon("❌ Fout antwoord, probeer het nogmaals.");
+            }
+        }
+
+        speler.setHuidigeKamer(kamer);
+        verwerkVoltooideKamer();
     }
 
     private boolean vraagOmVoorwerpGebruik(Kamer kamer, Monster monster) {
@@ -158,28 +180,34 @@ public class GameEngine {
         Weapon zwaard = kamer.getZwaard();
         game.voorwerp.Readable boek = kamer.getBoek();
 
-        return switch (input) {
-            case "gebruik zwaard" -> {
+        switch (input) {
+            case "gebruik zwaard":
                 if (zwaard != null) {
                     ui.toon(zwaard.attack(monster));
-                    yield true;
+                    // Controleer hier of monster dood is, bijvoorbeeld:
+                    return true;
                 } else {
                     ui.toon("❌ Geen zwaard beschikbaar.");
-                    yield false;
+                    return false;
                 }
-            }
-            case "gebruik boek" -> {
+            case "gebruik boek":
                 if (boek != null) {
                     ui.toon("📖 " + boek.showMessage());
+
                 } else {
                     ui.toon("❌ Geen boek beschikbaar.");
+
                 }
-                yield false;
-            }
-            case "" -> false;
-            default -> vraagOmVoorwerpGebruik(kamer, monster);
-        };
+                return true;
+            case "":
+                return false;
+            default:
+                ui.toon("❓ Onbekend commando, probeer opnieuw.");
+                return vraagOmVoorwerpGebruik(kamer, monster);
+        }
     }
+
+
 
     private void toonHintVoorKamer(Kamer kamer) {
         HintFactory factory = new HintFactory();
@@ -188,13 +216,16 @@ public class GameEngine {
     }
 
     private void verwerkVoltooideKamer() {
-        ui.toon("Goedzo, ga zo door!");
+        ui.toon("✅ Goedzo, ga zo door!");
         int huidigeIndex = kamers.indexOf(speler.getHuidigeKamer());
+
         if (huidigeIndex + 1 < kamers.size()) {
-            speler.setHuidigeKamer(kamers.get(huidigeIndex + 1));
+            ui.toon("➡️ Typ 'ga naar kamer " + (huidigeIndex + 2) + "' om door te gaan.");
         } else {
             ui.toon("🎉 Je hebt alle kamers doorlopen!");
             System.exit(0);
         }
     }
+
+
 }

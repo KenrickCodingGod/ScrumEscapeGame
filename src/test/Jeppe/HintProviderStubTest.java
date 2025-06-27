@@ -1,4 +1,4 @@
-/*package test.Jeppe;
+package test.Jeppe;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,4 +25,3 @@ public class HintProviderStubTest {
         assertEquals("Stub: vaste hint", hint.geefHint());
     }
 }
-*/

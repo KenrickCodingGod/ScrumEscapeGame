@@ -1,6 +1,7 @@
 package game;
 import game.kamer.Kamer;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class GameUI {
@@ -27,7 +28,7 @@ public class GameUI {
 
     public void toonStatus(Speler speler, Kamer kamer, int totaalKamers) {
         System.out.println("\n--- SPELER STATUS ---");
-        System.out.println("Kamer " + (kamer.getKamerNummer() - 1) + " van " + totaalKamers);
+        System.out.println("Kamer " + (kamer.getKamerNummer()) + " van " + totaalKamers);
         System.out.println("Actieve monsters: " + speler.getMonsterNamenAlsString());
     }
 

@@ -1,4 +1,4 @@
-/*package test.Kenrick;
+package test.Kenrick;
 
 import game.kamer.NormaleKamer;
 import game.vraag.Vraag;
@@ -27,7 +27,7 @@ public class StubTest {
                 new Zwaard("Testzwaard", "Stub!"),
                 new Boek("Testboek", "Stubboek"),
                 "stub hint",
-                new Monster("StubMonster", "Doet niks")
+                new Monster("StubMonster", "Doet niks"),"hintJokerTest", false, false
         );
 
         Speler speler = new Speler();
@@ -42,4 +42,3 @@ public class StubTest {
         }
     }
 }
-*/

@@ -1,4 +1,4 @@
-/*package test.Kenrick;
+package test.Kenrick;
 
 import game.kamer.NormaleKamer;
 import game.vraag.Vraag;
@@ -33,7 +33,7 @@ public class MockTest {
                 new Zwaard("MockZwaard", "🗡️"),
                 new Boek("MockBoek", "📘"),
                 "mock hint",
-                new Monster("MockMonster", "test")
+                new Monster("MockMonster", "test"),"hintJokerTest", false, false
         );
 
         Speler speler = new Speler();
@@ -46,4 +46,3 @@ public class MockTest {
         }
     }
 }
-*/

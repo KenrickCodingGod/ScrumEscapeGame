@@ -2,8 +2,6 @@ package game.kamer;
 
 import game.Monster;
 import game.Speler;
-import game.joker.HintJoker;
-import game.joker.KeyJoker;
 import game.voorwerp.Boek;
 import game.voorwerp.Zwaard;
 import game.vraag.MeerkeuzeVraag;

@@ -3,19 +3,13 @@ package game;
 import game.joker.Joker;
 
 import game.kamer.Kamer;
-import game.observer.GameStatusObserver;
-import game.observer.GameStatusView;
-import game.observer.SpelerObserver;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Speler {
+public class Speler extends ObservableSpeler {
     private Kamer huidigeKamer;
     private final List<Monster> monsters = new ArrayList<>();
-    private final List<SpelerObserver> observers = new ArrayList<>();
 
     private Joker gekozenJoker;
     private boolean jokerGebruikt = false;
@@ -27,20 +21,14 @@ public class Speler {
 
     public void setHuidigeKamer(Kamer kamer) {
         this.huidigeKamer = kamer;
-        notifyObservers();
+        notifyObservers(this);
 
-        for (SpelerObserver observer : observers) {
-            if (observer instanceof GameStatusObserver statusObserver) {
-                GameStatusView view = new GameStatusView();
-                view.toonStatus(statusObserver.getStatus());
-            }
-        }
     }
 
     public void voegMonsterToe(Monster monster) {
         monsters.add(monster);
         monster.toonMonster();
-        notifyObservers();
+        notifyObservers(this);
     }
 
     public List<Monster> getMonsters() {
@@ -53,6 +41,7 @@ public class Speler {
                 .map(Monster::getNaam)
                 .collect(Collectors.joining(", "));
     }
+
     public boolean heeftJoker() {
         return gekozenJoker != null;
     }
@@ -79,6 +68,7 @@ public class Speler {
         }
         return false;
     }
+
     public void setKamerOvergeslagen(boolean overgeslagen) {
         this.kamerOvergeslagen = overgeslagen;
     }
@@ -87,13 +77,4 @@ public class Speler {
         return kamerOvergeslagen;
     }
 
-    public void voegObserverToe(SpelerObserver observer) {
-        observers.add(observer);
-    }
-
-    private void notifyObservers() {
-        for (SpelerObserver o : observers) {
-            o.update(this);
-        }
-    }
 }
