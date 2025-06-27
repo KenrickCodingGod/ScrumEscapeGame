@@ -1,16 +1,13 @@
 package game;
 
-import game.command.CommandUitvoerder;
 import game.command.speler.*;
 import game.command.game.*;
 
-import game.GameUI;
 import game.joker.HintJoker;
 import game.joker.Joker;
 import game.joker.KeyJoker;
 import game.kamer.Kamer;
 import game.observer.GameStatusObserver;
-import game.Speler;
 
 import java.util.List;
 import java.util.Optional;
