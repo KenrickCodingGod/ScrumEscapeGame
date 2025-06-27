@@ -1,27 +1,25 @@
 package game.joker;
 
-import java.util.Set;
+import game.Speler;
+import game.kamer.Kamer;
 
-
-public class KeyJoker extends AbstractJoker {
-    private static final Set<Integer> TOEGESTAAN_KAMERS = Set.of(2, 4);
+public class KeyJoker implements Joker {
+    private boolean gebruikt = false;
 
     @Override
-    public void gebruikInKamer(int kamerNummer) {
-        if (!isGebruikt()) {
-            if (TOEGESTAAN_KAMERS.contains(kamerNummer)) {
-                markeerAlsGebruikt();
-            } else {
-                System.out.println("❌ Deze joker is niet toegestaan in kamer " + kamerNummer + ".");
-            }
-        } else {
-            System.out.println("❌ Je hebt deze joker al gebruikt.");
+    public boolean gebruik(Speler speler, Kamer kamer) {
+        if (gebruikt) {
+            System.out.println("❌ Je hebt de KeyJoker al gebruikt.");
+            return false;
         }
-    }
-
-    @Override
-    public boolean magGebruikenInKamer(int kamerNummer) {
-        return super.magGebruikenInKamer(kamerNummer) && TOEGESTAAN_KAMERS.contains(kamerNummer);
+        if (!kamer.isKeyJokerToegestaan()) {
+            System.out.println("❌ KeyJoker mag alleen in bepaalde kamers worden gebruikt.");
+            return false;
+        }
+        gebruikt = true;
+        speler.setKamerOvergeslagen(true);
+        System.out.println("🚪 Je hebt deze kamer overgeslagen met de KeyJoker!");
+        return true;
     }
 
     @Override

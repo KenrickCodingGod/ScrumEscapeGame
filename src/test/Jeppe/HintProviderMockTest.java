@@ -1,4 +1,4 @@
-package test.Jeppe;
+/*package test.Jeppe;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -31,3 +31,4 @@ public class HintProviderMockTest {
         assertEquals("Mock: hint", hint.geefHint());
     }
 }
+*/

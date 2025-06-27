@@ -10,7 +10,7 @@ public class GameUI {
         System.out.println("------------------------------\n Welkom bij Scrum Escape!\n------------------------------");
         System.out.println("Kies je joker:");
         System.out.println("1. HintJoker *gebruik door 'hintjoker' te typen*");
-        System.out.println("2. KeyJoker *gebruik door 'keyjoker' te typen*\n------------------------------");
+        System.out.println("2. KeyJoker *gebruik door 'keyjoker' te typen je mag hem alleen gebruiken in 2 en 4*\n------------------------------");
         System.out.println("Gebruik 'gebruik assistent' in kamer 1 en 3.");
         System.out.println("Gebruik 'gebruik boek' is altijd beschickbaar 'gebruik zwaard' kan je alleen activeren als er een monster is.");
         System.out.println("Commando's: 'status', 'reset', 'ga naar kamer X'\n------------------------------");

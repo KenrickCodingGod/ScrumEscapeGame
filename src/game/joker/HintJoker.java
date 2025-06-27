@@ -1,21 +1,22 @@
 package game.joker;
 
-public class HintJoker extends AbstractJoker {
-    private final HintProvider hintProvider;
+import game.Speler;
+import game.kamer.Kamer;
 
-    public HintJoker(HintProvider hintProvider) {
-        this.hintProvider = hintProvider;
-    }
+public class HintJoker implements Joker {
+    private boolean gebruikt = false;
+
+
 
     @Override
-    public void gebruikInKamer(int kamerNummer) {
-        if (!isGebruikt()) {
-            String hint = hintProvider.getHintVoorKamer(kamerNummer);
-            System.out.println("💡 Joker Hint - " + hint);
-            markeerAlsGebruikt();
-        } else {
-            System.out.println("⚠️ Je hebt deze joker al gebruikt.");
+    public boolean gebruik(Speler speler, Kamer kamer) {
+        if (gebruikt) {
+            System.out.println("❌ Je hebt de HintJoker al gebruikt.");
+            return false;
         }
+        gebruikt = true;
+        System.out.println("💡 Hint: " + kamer.getHintJoker());
+        return true;
     }
 
     @Override

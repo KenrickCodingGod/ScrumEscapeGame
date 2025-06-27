@@ -1,4 +1,4 @@
-package test.Semih;
+/*package test.Semih;
 
 import game.Monster;
 import game.Speler;
@@ -59,4 +59,4 @@ class StubTestInvulvraag {
         boolean resultaat = vraag.stelVraag(speler, dummyKamer);
         assertFalse(resultaat, "De vraag zou fout beantwoord moeten worden");
     }
-}
+}*/

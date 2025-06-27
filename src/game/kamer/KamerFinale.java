@@ -2,6 +2,8 @@ package game.kamer;
 
 import game.Monster;
 import game.Speler;
+import game.joker.HintJoker;
+import game.joker.KeyJoker;
 import game.voorwerp.Boek;
 import game.voorwerp.Zwaard;
 import game.vraag.MeerkeuzeVraag;
@@ -23,7 +25,10 @@ public class KamerFinale extends Kamer {
                 new Zwaard("Ottomaanse Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!"),
                 new Boek("Scrum Geheimen", "📘 Je ontdekt dat TIA draait om transparantie, inspectie en aanpassing."),
                 "HelpHint: Denk aan de kernwaarden van Scrum bij het beantwoorden van de vraag.",
-                new Monster("TIAverslinder", "De ultieme vijand die de kern van Scrum vergeet!")
+                new Monster("TIAverslinder", "De ultieme vijand die de kern van Scrum vergeet!"),
+                "Finale: Gebruik je alle kennis uit vorige kamers?",
+                false,
+                false
         );
     }
 

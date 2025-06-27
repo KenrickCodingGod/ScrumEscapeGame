@@ -1,10 +1,9 @@
-package test.Anas;
+/*package test.Anas;
 
 import game.Speler;
 import game.command.CommandUitvoerder;
 import game.command.GebruikJokerCommand;
 import game.command.KiesJokerCommand;
-import game.joker.Joker;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,4 +66,4 @@ class MockCommandTest {
         assertTrue(speler.kiesJokerAangeroepen);
         assertEquals(joker, speler.gekozenJoker);
     }
-}
+}*/

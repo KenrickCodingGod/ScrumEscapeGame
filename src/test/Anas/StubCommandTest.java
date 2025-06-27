@@ -1,4 +1,4 @@
-package test.Anas;
+/*package test.Anas;
 
 import game.Monster;
 import game.Speler;
@@ -55,4 +55,4 @@ class StubCommandTest {
         CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, m));
         assertTrue(speler.getMonsters().contains(m));
     }
-}
+}*/

@@ -1,7 +1,7 @@
 package game.command;
 
 import game.Speler;
-import game.joker.Joker;
+import game.joker.Joker;  // Zorg dat je dit importeert!
 
 public class KiesJokerCommand implements SpelerCommand {
     private final Speler speler;

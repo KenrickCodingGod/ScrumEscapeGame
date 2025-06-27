@@ -1,10 +1,12 @@
 package game;
 
 import game.joker.Joker;
+
 import game.kamer.Kamer;
 import game.observer.GameStatusObserver;
 import game.observer.GameStatusView;
 import game.observer.SpelerObserver;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Speler {
     private Kamer huidigeKamer;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<SpelerObserver> observers = new ArrayList<>();
+
     private Joker gekozenJoker;
     private boolean jokerGebruikt = false;
     private boolean kamerOvergeslagen = false;
@@ -22,29 +25,16 @@ public class Speler {
         return huidigeKamer;
     }
 
-    public void setKamerOvergeslagen(boolean overgeslagen) {
-        this.kamerOvergeslagen = overgeslagen;
-    }
-
-    public boolean isKamerOvergeslagen() {
-        return kamerOvergeslagen;
-    }
-
     public void setHuidigeKamer(Kamer kamer) {
         this.huidigeKamer = kamer;
         notifyObservers();
 
         for (SpelerObserver observer : observers) {
             if (observer instanceof GameStatusObserver statusObserver) {
-
                 GameStatusView view = new GameStatusView();
                 view.toonStatus(statusObserver.getStatus());
             }
         }
-    }
-
-    public List<Monster> getMonsters() {
-        return monsters;
     }
 
     public void voegMonsterToe(Monster monster) {
@@ -53,32 +43,48 @@ public class Speler {
         notifyObservers();
     }
 
+    public List<Monster> getMonsters() {
+        return monsters;
+    }
+
     public String getMonsterNamenAlsString() {
         if (monsters.isEmpty()) return "Geen";
         return monsters.stream()
                 .map(Monster::getNaam)
                 .collect(Collectors.joining(", "));
     }
+    public boolean heeftJoker() {
+        return gekozenJoker != null;
+    }
+
+    public boolean jokerAlGebruikt() {
+        return jokerGebruikt;
+    }
+
+    public Joker getGekozenJoker() {
+        return gekozenJoker;
+    }
 
     public void kiesJoker(Joker joker) {
         this.gekozenJoker = joker;
     }
 
-    public boolean heeftJoker() {
-        return gekozenJoker != null && !jokerGebruikt;
-    }
-
-    public void gebruikJoker(int kamerNummer) {
-        if (heeftJoker() && gekozenJoker.magGebruikenInKamer(kamerNummer)) {
-            gekozenJoker.gebruikInKamer(kamerNummer);
-            jokerGebruikt = true;
-        } else {
-            System.out.println("Je kunt deze joker hier niet gebruiken of hebt hem al gebruikt.");
+    public boolean gebruikJoker(Kamer kamer) {
+        if (heeftJoker() && !jokerGebruikt) {
+            boolean mag = gekozenJoker.gebruik(this, kamer);
+            if (mag) {
+                jokerGebruikt = true;
+                return true;
+            }
         }
+        return false;
+    }
+    public void setKamerOvergeslagen(boolean overgeslagen) {
+        this.kamerOvergeslagen = overgeslagen;
     }
 
-    public Joker getGekozenJoker() {
-        return gekozenJoker;
+    public boolean isKamerOvergeslagen() {
+        return kamerOvergeslagen;
     }
 
     public void voegObserverToe(SpelerObserver observer) {

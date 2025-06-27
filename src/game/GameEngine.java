@@ -9,8 +9,8 @@ import game.command.KiesJokerCommand;
 import game.command.VoegMonsterToeCommand;
 import game.hint.Hint;
 import game.hint.HintFactory;
-import game.joker.DefaultHintProvider;
 import game.joker.HintJoker;
+import game.joker.Joker;
 import game.joker.KeyJoker;
 import game.kamer.Kamer;
 import game.observer.GameStatusObserver;
@@ -43,14 +43,25 @@ public class GameEngine {
 
     private void kiesJoker() {
         String gekozen = ui.leesInput();
+        String bericht = null;
+        Joker gekozenJoker = null;
+
         if (gekozen.equals("1")) {
-            CommandUitvoerder.voerUit(new KiesJokerCommand(speler, new HintJoker(new DefaultHintProvider())));
-            ui.toon("Je hebt gekozen voor de HintJoker.");
+            gekozenJoker = new HintJoker();
+            bericht = "Je hebt gekozen voor de HintJoker.";
         } else if (gekozen.equals("2")) {
-            CommandUitvoerder.voerUit(new KiesJokerCommand(speler, new KeyJoker()));
-            ui.toon("Je hebt gekozen voor de KeyJoker.");
+            gekozenJoker = new KeyJoker();
+            bericht = "Je hebt gekozen voor de KeyJoker.";
+        } else {
+            ui.toon("Ongeldige keuze, probeer opnieuw.");
+            kiesJoker(); // herhaal keuze als onjuist
+            return;
         }
+
+        CommandUitvoerder.voerUit(new KiesJokerCommand(speler, gekozenJoker));
+        ui.toon(bericht);
     }
+
 
     private void verwerkInput(String input) {
         switch (input) {
@@ -80,10 +91,11 @@ public class GameEngine {
     }
 
     public void gebruikAssistent() {
-        int kamerNr = speler.getHuidigeKamer().getKamerNummer();
-        if (kamerNr == 1 || kamerNr == 3) {
+        Kamer huidigeKamer = speler.getHuidigeKamer();
+
+        if (huidigeKamer.isAssistentToegestaan()) {
             Assistent assistent = new Assistent(List.of(
-                    new HintAssistent(speler),
+                    new HintAssistent(),
                     new StappenplanHulpmiddel(),
                     new Motivator()
             ));
@@ -92,6 +104,7 @@ public class GameEngine {
             ui.toon("❌ Geen assistent in deze kamer.");
         }
     }
+
 
     public void verwerkKamerBezoek(String input) {
         try {

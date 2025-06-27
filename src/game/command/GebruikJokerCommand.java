@@ -1,18 +1,19 @@
 package game.command;
 
 import game.Speler;
+import game.kamer.Kamer;
 
 public class GebruikJokerCommand implements SpelerCommand {
     private final Speler speler;
-    private final int kamerNummer;
+    private final Kamer kamer;
 
-    public GebruikJokerCommand(Speler speler, int kamerNummer) {
+    public GebruikJokerCommand(Speler speler, Kamer kamer) {
         this.speler = speler;
-        this.kamerNummer = kamerNummer;
+        this.kamer = kamer;
     }
 
     @Override
     public void execute() {
-        speler.gebruikJoker(kamerNummer);
+        speler.gebruikJoker(kamer);
     }
 }

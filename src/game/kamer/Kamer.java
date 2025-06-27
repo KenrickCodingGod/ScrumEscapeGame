@@ -9,32 +9,56 @@ import game.vraag.Vraag;
 public abstract class Kamer {
     private final int kamerNummer;
     private final String naam;
-      protected final Vraag vraag;
+    protected final Vraag vraag;
     private final Weapon zwaard;
     private final Readable boek;
     private final String hint;
     private final Monster monster;
+    private final String hintJoker;
+    private final boolean keyJokerToegestaan;
+    private final boolean assistentToegestaan;
 
-
-
-    public Kamer(int kamerNummer, String naam, Vraag vraag, Weapon zwaard, Readable boek, String hint, Monster monster) {
+    public Kamer(int kamerNummer, String naam, Vraag vraag, Weapon zwaard, Readable boek, String hint,
+                 Monster monster, String hintJoker, boolean keyJokerToegestaan, boolean assistentToegestaan) {
         this.kamerNummer = kamerNummer;
         this.naam = naam;
-
         this.vraag = vraag;
         this.zwaard = zwaard;
         this.boek = boek;
         this.hint = hint;
         this.monster = monster;
+        this.hintJoker = hintJoker;
+        this.keyJokerToegestaan = keyJokerToegestaan;
+        this.assistentToegestaan = assistentToegestaan;
     }
 
-    public int getKamerNummer() { return kamerNummer; }
-      public String getNaam() { return naam; }
-       public Weapon getZwaard() { return zwaard; }
-    public Readable getBoek() { return boek; }
-
-    public String getHint() { return hint; }
-    public Monster getMonster() { return monster; }
+    public int getKamerNummer() {
+        return kamerNummer;
+    }
+    public String getNaam() {
+        return naam;
+    }
+    public Weapon getZwaard() {
+        return zwaard;
+    }
+    public Readable getBoek() {
+        return boek;
+    }
+    public boolean isKeyJokerToegestaan() {
+        return keyJokerToegestaan;
+    }
+    public boolean isAssistentToegestaan() {
+        return assistentToegestaan;
+    }
+    public String getHintJoker() {
+        return hintJoker;
+    }
+    public String getHint() {
+        return hint;
+    }
+    public Monster getMonster() {
+        return monster;
+    }
 
     public abstract boolean voerUit(Speler speler);
 }

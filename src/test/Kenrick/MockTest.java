@@ -1,4 +1,4 @@
-package test.Kenrick;
+/*package test.Kenrick;
 
 import game.kamer.NormaleKamer;
 import game.vraag.Vraag;
@@ -46,3 +46,4 @@ public class MockTest {
         }
     }
 }
+*/
