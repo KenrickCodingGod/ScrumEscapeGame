@@ -27,7 +27,7 @@ public class KamerFinale extends Kamer {
         );
     }
 
-
+    @Override
     public boolean voerUit(Speler speler) {
         System.out.println("Je bent in de kamer: " + getNaam());
         boolean juist = vraag.stelVraag(speler, this);
