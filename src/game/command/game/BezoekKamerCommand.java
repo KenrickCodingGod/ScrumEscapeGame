@@ -24,7 +24,7 @@ public class BezoekKamerCommand implements Command {
     }
 
     public void voerUit() {
-       int huidigeIndex = speler.getHuidigeKamer() == null ? -1 : kamers.indexOf(speler.getHuidigeKamer());
+        int huidigeIndex = speler.getHuidigeKamer() == null ? -1 : kamers.indexOf(speler.getHuidigeKamer());
         int doelIndex = kamers.indexOf(kamer);
 
         if (doelIndex != huidigeIndex + 1) {
@@ -32,44 +32,37 @@ public class BezoekKamerCommand implements Command {
             return;
         }
 
+        boolean correct = kamer.voerUit(speler, kamers);
+        if (!correct) {
+            Monster monster = kamer.getMonster();
+            CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, monster));
 
-        boolean correct = kamer.voerUit(speler);
-        if (correct) {
-            speler.setHuidigeKamer(kamer);
-            CommandUitvoerder.voerUit(new VerwerkVoltooideKamerCommand(speler,kamers,ui));
-            return;
-        }
-
-
-        Monster monster = kamer.getMonster();
-        CommandUitvoerder.voerUit(new VoegMonsterToeCommand(speler, monster));
-
-        if (ui.bevestig("------------------------------\n❓ Wil je een hint?")) {
-            CommandUitvoerder.voerUit(new ToonHintVoorKamerCommand(kamer, ui));
-        }
-
-
-        boolean monsterVerslagen = false;
-        while (!monsterVerslagen) {
-            VraagOmVoorwerpGebruik vraagCommand = new VraagOmVoorwerpGebruik(kamer, monster, ui);
-            vraagCommand.voerUit();
-            monsterVerslagen = vraagCommand.getResultaat();
-            if (!monsterVerslagen) {
-                ui.toon("🛑 Monster niet verslagen. Probeer nogmaals.");
+            if (ui.bevestig("------------------------------\n❓ Wil je een hint?")) {
+                CommandUitvoerder.voerUit(new ToonHintVoorKamerCommand(kamer, ui));
             }
-        }
 
+            boolean monsterVerslagen = false;
+            while (!monsterVerslagen) {
+                VraagOmVoorwerpGebruik vraagCommand = new VraagOmVoorwerpGebruik(kamer, monster, ui);
+                vraagCommand.voerUit();
+                monsterVerslagen = vraagCommand.getResultaat();
+                if (!monsterVerslagen) {
+                    ui.toon("🛑 Monster niet verslagen. Probeer nogmaals.");
+                }
+            }
 
-        boolean opnieuwJuist = false;
-        while (!opnieuwJuist) {
-            ui.toon("Probeer nu opnieuw de vraag te beantwoorden:");
-            opnieuwJuist = kamer.voerUit(speler);
-            if (!opnieuwJuist) {
-                ui.toon("❌ Fout antwoord, probeer het nogmaals.");
+            boolean opnieuwJuist = false;
+            while (!opnieuwJuist) {
+                ui.toon("Probeer nu opnieuw de vraag te beantwoorden:");
+                opnieuwJuist = kamer.voerUit(speler, kamers);
+                if (!opnieuwJuist) {
+                    ui.toon("❌ Fout antwoord, probeer het nogmaals.");
+                }
             }
         }
 
         speler.setHuidigeKamer(kamer);
-        CommandUitvoerder.voerUit(new VerwerkVoltooideKamerCommand(speler,kamers,ui));
+        CommandUitvoerder.voerUit(new VerwerkVoltooideKamerCommand(speler, kamers, ui));
     }
+
 }

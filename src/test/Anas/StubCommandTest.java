@@ -43,7 +43,7 @@ class StubCommandTest {
     @Test
     void testSetPositieCommandMetStub() {
         StubSpeler speler = new StubSpeler();
-        Kamer kamer = new NormaleKamer(7, "Test Kamer", null, null, null, null, null, null, false, false);
+        Kamer kamer = new NormaleKamer("Test Kamer", null, null, null, null, null, null, false, false);
         CommandUitvoerder.voerUit(new SetPositieCommand(speler, kamer));
         assertEquals(kamer, speler.getHuidigeKamer());
     }

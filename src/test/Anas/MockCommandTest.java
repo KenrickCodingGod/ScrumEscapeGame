@@ -57,7 +57,7 @@ class MockCommandTest {
         Joker joker = new MockJoker();
         speler.kiesJoker(joker);
 
-        Kamer kamer = new NormaleKamer(0,null,null,null,null,null,null,null,false,false);
+        Kamer kamer = new NormaleKamer(null,null,null,null,null,null,null,false,false);
         CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, kamer));
 
         assertTrue(speler.gebruikJokerAangeroepen, "Joker is niet gebruikt");

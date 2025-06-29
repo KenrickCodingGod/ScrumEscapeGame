@@ -6,8 +6,9 @@ import game.voorwerp.Readable;
 import game.voorwerp.Weapon;
 import game.vraag.Vraag;
 
+import java.util.List;
+
 public abstract class Kamer {
-    private final int kamerNummer;
     private final String naam;
     protected final Vraag vraag;
     private final Weapon zwaard;
@@ -18,9 +19,8 @@ public abstract class Kamer {
     private final boolean keyJokerToegestaan;
     private final boolean assistentToegestaan;
 
-    public Kamer(int kamerNummer, String naam, Vraag vraag, Weapon zwaard, Readable boek, String hint,
+    public Kamer(String naam, Vraag vraag, Weapon zwaard, Readable boek, String hint,
                  Monster monster, String hintJoker, boolean keyJokerToegestaan, boolean assistentToegestaan) {
-        this.kamerNummer = kamerNummer;
         this.naam = naam;
         this.vraag = vraag;
         this.zwaard = zwaard;
@@ -32,9 +32,6 @@ public abstract class Kamer {
         this.assistentToegestaan = assistentToegestaan;
     }
 
-    public int getKamerNummer() {
-        return kamerNummer;
-    }
     public String getNaam() {
         return naam;
     }
@@ -60,5 +57,5 @@ public abstract class Kamer {
         return monster;
     }
 
-    public abstract boolean voerUit(Speler speler);
+    public abstract boolean voerUit(Speler speler, List<Kamer> kamers);
 }

@@ -19,7 +19,7 @@ public class GameEngine {
         this.kamers = kamerFactory.maakKamers();
         this.speler = new Speler();
         speler.setHuidigeKamer(null);
-        speler.attach(new GameStatusObserver());
+        speler.attach(new GameStatusObserver(kamers));
     }
 
     public void start() {

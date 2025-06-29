@@ -17,10 +17,10 @@ public class KamerFactory {
         List<Kamer> kamers = new ArrayList<>();
 
 
-        kamers.add(new NormaleKamer(1, "Sprint Planning",
+        kamers.add(new NormaleKamer("Sprint Planning",
                 new InvulVraag("Wat is meestal het laatste op de planning als het gaat om coderen?", "testen"),
                 new Zwaard("Diamanten Zwaard", "🗡️ Je doet 10 hartjes damage!"),
-                new Boek("Sprint Strategieboek", "📘 Je ontdekt dat testen vaak het sluitstuk is van een goede planning."),
+                new Boek("Sprint Strategieboek", " Je ontdekt dat testen vaak het sluitstuk is van een goede planning."),
                 "Sprint Planning: Hoe check je fouten? Door te ......",
                 new Monster("Scopezilla", "Te veel werk zonder afstemming toegevoegd."),
                 "Sprint Planning: Hoe check je fouten? Door te ......",
@@ -29,7 +29,7 @@ public class KamerFactory {
         ));
 
 
-        kamers.add(new NormaleKamer(2, "Daily Scrum",
+        kamers.add(new NormaleKamer("Daily Scrum",
                 new InvulVraag("Welke mensen zitten er ALTIJD bij de Daily Scrum?", "developers"),
                 new Zwaard("Stand-up Speer", "🗡️ Je prikt het monster door met de scherpte van dagelijkse communicatie!"),
                 new Boek("All wetende boek", "Je hebt geleerd dat het antwoord developers, product owners of scrum master is."),
@@ -41,7 +41,7 @@ public class KamerFactory {
         ));
 
 
-        kamers.add(new NormaleKamer(3, "Scrum Board",
+        kamers.add(new NormaleKamer( "Scrum Board",
                 new MeerkeuzeVraag("Wat hoort NIET op een Scrum Board?", new String[]{
                         "A) Taken en user stories",
                         "B) De persoonlijke agenda van de Product Owner",
@@ -49,7 +49,7 @@ public class KamerFactory {
                         "D) Review / testen"
                 }, "b"),
                 new Zwaard("Excalibur", "🗡️ Je vernietigt het monster met Excalibur!"),
-                new Boek("Scrum Bord Bijbel", "📘 Je leert dat persoonlijke agenda's niets te zoeken hebben op een professioneel Scrum Board."),
+                new Boek("Scrum Bord Bijbel", " Je leert dat persoonlijke agenda's niets te zoeken hebben op een professioneel Scrum Board."),
                 "Scrum Board: Iets hoort hier echt niet thuis...",
                 new Monster("Chaos Tornado", "Geen overzicht op de taken."),
                 "Scrum Board: Iets hoort hier echt niet thuis...",
@@ -58,7 +58,7 @@ public class KamerFactory {
         ));
 
 
-        kamers.add(new NormaleKamer(4, "Sprint Review",
+        kamers.add(new NormaleKamer("Sprint Review",
                 new MatchVraag(
                         "\nWat hoort bij wie of wat tijdens de Sprint Review?",
                         new String[]{"Scrum Team", "Stakeholders", "Product Owner"},
@@ -75,10 +75,10 @@ public class KamerFactory {
         ));
 
 
-        kamers.add(new NormaleKamer(5, "Sprint Retrospective",
+        kamers.add(new NormaleKamer("Sprint Retrospective",
                 new InvulVraag("In een retrospective evalueer je 2 onderdelen. Eén is 'het proces', wat is de andere?", "samenwerking"),
                 new Zwaard("Katana", "🗡️ Je slaat het monster doormidden als in Fruit Ninja!"),
-                new Boek("Retro Reflector", "📘 Je leert dat samenwerking en proces beide geëvalueerd worden in een goede retrospective."),
+                new Boek("Retro Reflector", " Je leert dat samenwerking en proces beide geëvalueerd worden in een goede retrospective."),
                 "Retrospective: Unscramble het antwoord! : wsanmenerikg",
                 new Monster("LoopSpook", "Je leert niet van fouten."),
                 "Retrospective: Unscramble het antwoord! : wsanmenerikg",
@@ -87,7 +87,7 @@ public class KamerFactory {
         ));
 
 
-        kamers.add(new KamerFinale(6
+        kamers.add(new KamerFinale(
         ));
 
 

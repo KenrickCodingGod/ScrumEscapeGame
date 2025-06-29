@@ -26,11 +26,14 @@ public class GameUI {
         System.out.println(bericht);
     }
 
-    public void toonStatus(Speler speler, Kamer kamer, int totaalKamers) {
+    public void toonStatus(Speler speler, Kamer kamer, List<Kamer> kamers) {
+        int totaalKamers = kamers.size();
+        int kamerIndex = kamer == null ? -1 : kamers.indexOf(kamer);
         System.out.println("\n--- SPELER STATUS ---");
-        System.out.println("Kamer " + (kamer == null ? 0 : kamer.getKamerNummer()) + " van " + totaalKamers);
+        System.out.println("Kamer " + (kamerIndex + 1) + " van " + totaalKamers);
         System.out.println("Actieve monsters: " + speler.getMonsterNamenAlsString());
     }
+
 
     public boolean bevestig(String vraag) {
         System.out.println(vraag + " (ja/nee)\n------------------------------");

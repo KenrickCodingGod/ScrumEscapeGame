@@ -28,9 +28,9 @@ public class VerwerkInputCommand implements Command {
 
     public void voerUit() {
         switch (input) {
-            case "status" -> CommandUitvoerder.voerUit(new ToonStatusCommand(speler, speler.getHuidigeKamer(), kamers.size(), ui)
+            case "status" -> CommandUitvoerder.voerUit(new ToonStatusCommand(speler, speler.getHuidigeKamer(), ui, kamers)
             );
-            case "reset" -> CommandUitvoerder.voerUit(new ResetSpelCommand(gameEngine));
+            case "reset" -> CommandUitvoerder.voerUit(new ResetSpelCommand(gameEngine, kamers));
             case "gebruik assistent" -> CommandUitvoerder.voerUit(new GebruikAssistentCommand(speler, ui)
             );
             default -> {

@@ -24,7 +24,7 @@ class StubTestInvulvraag {
         Speler speler = new Speler();
 
         Kamer dummyKamer = new NormaleKamer(
-                0,
+
                 "Dummy",
                 vraag,
                 new Zwaard("TestZwaard", "Test zwaard effect"),
@@ -47,7 +47,7 @@ class StubTestInvulvraag {
         Speler speler = new Speler();
 
         Kamer dummyKamer = new NormaleKamer(
-                0,
+
                 "Dummy",
                 vraag,
                 new Zwaard("TestZwaard", "Test zwaard effect"),

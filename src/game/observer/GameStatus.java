@@ -2,12 +2,12 @@ package game.observer;
 
 public class GameStatus {
     public final String kamerNaam;
-    public final int kamerNummer;
+    public final int kamerIndex;
     public final String laatsteMonster;
 
-    public GameStatus(String kamerNaam, int kamerNummer, String laatsteMonster) {
+    public GameStatus(String kamerNaam, int kamerIndex, String laatsteMonster) {
         this.kamerNaam = kamerNaam;
-        this.kamerNummer = kamerNummer;
+        this.kamerIndex = kamerIndex;
         this.laatsteMonster = laatsteMonster;
     }
 }

@@ -1,25 +1,32 @@
-/*package test.Mick;
-
+package test.Mick;
 import game.Speler;
 import game.observer.SpelerObserver;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MockTestObserverCall {
 
+
+    static class ObserverMock implements SpelerObserver {
+        boolean updateAangeroepen = false;
+
+        @Override
+        public void update(Speler speler) {
+            updateAangeroepen = true;
+        }
+    }
+
     @Test
     void testUpdateWordtAangeroepenOpObserver() {
-
         Speler speler = new Speler();
-        SpelerObserver observerMock = mock(SpelerObserver.class);
+        ObserverMock observerMock = new ObserverMock();
 
-        speler.voegObserverToe(observerMock);
-
-
-        speler.veranderPositie(3);
+        speler.attach(observerMock);
 
 
-        verify(observerMock, times(1)).update(speler);
+        speler.setHuidigeKamer(null);
+
+        assertTrue(observerMock.updateAangeroepen, "Observer update werd niet aangeroepen");
     }
-} */
+}

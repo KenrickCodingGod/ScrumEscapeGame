@@ -1,5 +1,6 @@
 package test.Kenrick;
 
+import game.kamer.Kamer;
 import game.kamer.NormaleKamer;
 import game.vraag.Vraag;
 import game.voorwerp.Zwaard;
@@ -7,13 +8,15 @@ import game.voorwerp.Boek;
 import game.Monster;
 import game.Speler;
 
+import java.util.List;
+
 public class MockTest {
 
     static class MockVraag implements Vraag {
         boolean isAangeroepen = false;
 
         @Override
-        public boolean stelVraag(Speler speler, game.kamer.Kamer kamer) {
+        public boolean stelVraag(Speler speler, Kamer kamer) {
             isAangeroepen = true;
             return false;
         }
@@ -27,17 +30,23 @@ public class MockTest {
         MockVraag mock = new MockVraag();
 
         NormaleKamer kamer = new NormaleKamer(
-                2,
                 "Mock Kamer",
                 mock,
                 new Zwaard("MockZwaard", "🗡️"),
                 new Boek("MockBoek", "📘"),
                 "mock hint",
-                new Monster("MockMonster", "test"),"hintJokerTest", false, false
+                new Monster("MockMonster", "test"),
+                "hintJokerTest",
+                false,
+                false
         );
 
         Speler speler = new Speler();
-        kamer.voerUit(speler);
+        speler.setHuidigeKamer(kamer);
+
+        List<Kamer> kamers = List.of(kamer);
+
+        kamer.voerUit(speler, kamers);
 
         if (mock.isOpgeroepen()) {
             System.out.println("✅ Mock test geslaagd: stelVraag werd aangeroepen.");

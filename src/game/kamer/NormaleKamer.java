@@ -9,16 +9,19 @@ import game.voorwerp.Readable;
 import game.voorwerp.Weapon;
 import game.vraag.Vraag;
 
+import java.util.List;
+
 public class NormaleKamer extends Kamer {
-    public NormaleKamer(int nummer, String naam, Vraag vraag, Weapon zwaard, Readable boek, String hint,
+    public NormaleKamer(String naam, Vraag vraag, Weapon zwaard, Readable boek, String hint,
                         Monster monster, String hintJoker, boolean keyJokerToegestaan, boolean assistentToegestaan) {
-        super(nummer, naam, vraag, zwaard, boek, hint, monster, hintJoker, keyJokerToegestaan, assistentToegestaan);
+        super(naam, vraag, zwaard, boek, hint, monster, hintJoker, keyJokerToegestaan, assistentToegestaan);
     }
 
 
     @Override
-    public boolean voerUit(Speler speler) {
-        System.out.println("Je bent in kamer " + getKamerNummer() + ": " + getNaam());
+    public boolean voerUit(Speler speler, List<Kamer> kamers) {
+        int index = kamers.indexOf(this);
+        System.out.println("Je bent in kamer " + (index + 1) + ": " + getNaam());
         return vraag.stelVraag(speler, this);
     }
 }

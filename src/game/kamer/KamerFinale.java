@@ -6,10 +6,11 @@ import game.voorwerp.Boek;
 import game.voorwerp.Zwaard;
 import game.vraag.MeerkeuzeVraag;
 
+import java.util.List;
+
 public class KamerFinale extends Kamer {
-    public KamerFinale(int nummer) {
+    public KamerFinale() {
         super(
-                nummer,
                 "Finale Kamer",
                 new MeerkeuzeVraag(
                         "Waar staat TIA voor in Scrum?",
@@ -21,7 +22,7 @@ public class KamerFinale extends Kamer {
                         "b"
                 ),
                 new Zwaard("Ottomaanse Scimitar", "🗡️ Je verslaat het monster met de Ottomaanse Scimitar!"),
-                new Boek("Scrum Geheimen", "📘 Je ontdekt dat TIA draait om transparantie, inspectie en aanpassing."),
+                new Boek("Scrum Geheimen", " Je ontdekt dat TIA draait om transparantie, inspectie en aanpassing."),
                 "HelpHint: Denk aan de kernwaarden van Scrum bij het beantwoorden van de vraag.",
                 new Monster("TIAverslinder", "De ultieme vijand die de kern van Scrum vergeet!"),
                 "Finale: Gebruik je alle kennis uit vorige kamers?",
@@ -31,7 +32,7 @@ public class KamerFinale extends Kamer {
     }
 
     @Override
-    public boolean voerUit(Speler speler) {
+    public boolean voerUit(Speler speler, List<Kamer> kamers) {
         System.out.println("Je bent in de kamer: " + getNaam());
         boolean juist = vraag.stelVraag(speler, this);
         if (juist) {

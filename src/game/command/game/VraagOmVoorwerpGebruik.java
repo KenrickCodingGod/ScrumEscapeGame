@@ -27,37 +27,36 @@ public class VraagOmVoorwerpGebruik implements Command {
     public void voerUit() {
         ui.toon("------------------------------\nEr is een monster: " + monster.getNaam());
         ui.toon("Gebruik een item: 'gebruik zwaard', 'gebruik boek' of doe niets\n------------------------------");
+
         String input = ui.leesInput().toLowerCase();
         Weapon zwaard = kamer.getZwaard();
         Readable boek = kamer.getBoek();
 
         switch (input) {
-            case "gebruik zwaard":
-                if (zwaard != null) {
-                    ui.toon(zwaard.attack(monster));
-                    resultaat = true;
-                } else {
-                    ui.toon("❌ Geen zwaard beschikbaar.");
-                    resultaat = false;
-                }
-                break;
-
-            case "gebruik boek":
-                if (boek != null) {
-                    ui.toon("📖 " + boek.showMessage());
-                } else {
-                    ui.toon("❌ Geen boek beschikbaar.");
-                }
-                resultaat = true;
-                break;
-
-            case "":
-                resultaat = false;
-                break;
-
-            default:
-                ui.toon("❓ Onbekend commando, probeer opnieuw.");
-                break;
+            case "gebruik zwaard" -> gebruikZwaard(zwaard);
+            case "gebruik boek" -> gebruikBoek(boek);
+            case "" -> resultaat = false;
+            default -> ui.toon("❓ Onbekend commando, probeer opnieuw.");
         }
     }
+
+    private void gebruikZwaard(Weapon zwaard) {
+        if (zwaard != null) {
+            ui.toon(zwaard.attack(monster));
+            resultaat = true;
+        } else {
+            ui.toon("❌ Geen zwaard beschikbaar.");
+            resultaat = false;
+        }
+    }
+
+    private void gebruikBoek(Readable boek) {
+        if (boek != null) {
+            ui.toon("📖 " + boek.showMessage());
+        } else {
+            ui.toon("❌ Geen boek beschikbaar.");
+        }
+        resultaat = true;
+    }
+
 }
