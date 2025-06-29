@@ -21,17 +21,16 @@ class MockTestAssistent {
 
     @Test
     void testActiveerRoepAfhankelijkhedenAan() {
-        // Arrange
         MockComponent mockHint = new MockComponent();
         MockComponent mockHulpmiddel = new MockComponent();
         MockComponent mockMotivator = new MockComponent();
 
         Assistent assistent = new Assistent(List.of(mockHint, mockHulpmiddel, mockMotivator));
 
-        // Act
+
         assistent.activeer();
 
-        // Assert
+
         assertTrue(mockHint.activeerCalled, "Hint-component moet geactiveerd worden");
         assertTrue(mockHulpmiddel.activeerCalled, "Hulpmiddel-component moet geactiveerd worden");
         assertTrue(mockMotivator.activeerCalled, "Motivator-component moet geactiveerd worden");

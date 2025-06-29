@@ -28,7 +28,7 @@ public class KamerFactory {
                 true
         ));
 
-// Kamer 2
+
         kamers.add(new NormaleKamer(2, "Daily Scrum",
                 new InvulVraag("Welke mensen zitten er ALTIJD bij de Daily Scrum?", "developers"),
                 new Zwaard("Stand-up Speer", "🗡️ Je prikt het monster door met de scherpte van dagelijkse communicatie!"),
@@ -40,7 +40,7 @@ public class KamerFactory {
                 false
         ));
 
-// Kamer 3
+
         kamers.add(new NormaleKamer(3, "Scrum Board",
                 new MeerkeuzeVraag("Wat hoort NIET op een Scrum Board?", new String[]{
                         "A) Taken en user stories",
@@ -57,7 +57,7 @@ public class KamerFactory {
                 true
         ));
 
-// Kamer 4
+
         kamers.add(new NormaleKamer(4, "Sprint Review",
                 new MatchVraag(
                         "\nWat hoort bij wie of wat tijdens de Sprint Review?",
@@ -74,7 +74,7 @@ public class KamerFactory {
                 false
         ));
 
-// Kamer 5
+
         kamers.add(new NormaleKamer(5, "Sprint Retrospective",
                 new InvulVraag("In een retrospective evalueer je 2 onderdelen. Eén is 'het proces', wat is de andere?", "samenwerking"),
                 new Zwaard("Katana", "🗡️ Je slaat het monster doormidden als in Fruit Ninja!"),
@@ -86,7 +86,7 @@ public class KamerFactory {
                 false
         ));
 
-// Finale kamer 6
+
         kamers.add(new KamerFinale(6
         ));
 

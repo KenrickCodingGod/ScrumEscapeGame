@@ -1,69 +1,77 @@
-/*package test.Anas;
+package test.Anas;
 
 import game.Speler;
 import game.command.CommandUitvoerder;
-import game.command.GebruikJokerCommand;
-import game.command.KiesJokerCommand;
+import game.command.speler.GebruikJokerCommand;
+import game.command.speler.KiesJokerCommand;
+import game.joker.Joker;
+import game.kamer.Kamer;
+import game.kamer.NormaleKamer;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MockCommandTest {
 
+
+
+
+    static class MockJoker implements Joker {
+        boolean gebruikt = false;
+
+        @Override
+        public boolean gebruik(Speler speler, Kamer kamer) {
+            gebruikt = true;
+            return true;
+        }
+
+        @Override
+        public String getNaam() {
+            return "MockJoker";
+        }
+    }
+
+
     static class MockSpeler extends Speler {
         boolean gebruikJokerAangeroepen = false;
         boolean kiesJokerAangeroepen = false;
-        int gekozenKamer = -1;
-        Joker gekozenJoker = null;
+        Joker gekozenJokerRef;
 
         @Override
-        public void gebruikJoker(int kamer) {
+        public boolean gebruikJoker(Kamer kamer) {
             gebruikJokerAangeroepen = true;
-            gekozenKamer = kamer;
+            return super.gebruikJoker(kamer);
         }
 
         @Override
         public void kiesJoker(Joker joker) {
             kiesJokerAangeroepen = true;
-            gekozenJoker = joker;
-        }
-    }
-
-    static class MockJoker implements Joker {
-        public MockJoker() {
-            super();
-        }
-
-        @Override
-        public boolean magGebruikenInKamer(int kamerNummer) {
-            return false;
-        }
-
-        @Override
-        public void gebruikInKamer(int kamerNummer) {
-
-        }
-
-        @Override
-        public String getNaam() {
-            return "";
+            gekozenJokerRef = joker;
+            super.kiesJoker(joker);
         }
     }
 
     @Test
-    void testGebruikJokerCommandMetHandmatigeMock() {
+    void testGebruikJokerCommandMetMock() {
         MockSpeler speler = new MockSpeler();
-        int kamer = 4;
+        Joker joker = new MockJoker();
+        speler.kiesJoker(joker);
+
+        Kamer kamer = new NormaleKamer(0,null,null,null,null,null,null,null,false,false);
         CommandUitvoerder.voerUit(new GebruikJokerCommand(speler, kamer));
-        assertTrue(speler.gebruikJokerAangeroepen);
-        assertEquals(kamer, speler.gekozenKamer);
+
+        assertTrue(speler.gebruikJokerAangeroepen, "Joker is niet gebruikt");
+        assertTrue(((MockJoker) joker).gebruikt, "Joker zelf is niet geactiveerd");
+        assertTrue(speler.jokerAlGebruikt(), "Speler status moet jokerGebruikt zijn");
     }
 
     @Test
-    void testKiesJokerCommandMetHandmatigeMock() {
+    void testKiesJokerCommandMetMock() {
         MockSpeler speler = new MockSpeler();
-        MockJoker joker = new MockJoker();
+        Joker joker = new MockJoker();
         CommandUitvoerder.voerUit(new KiesJokerCommand(speler, joker));
-        assertTrue(speler.kiesJokerAangeroepen);
-        assertEquals(joker, speler.gekozenJoker);
+
+        assertTrue(speler.kiesJokerAangeroepen, "kiesJoker is niet aangeroepen");
+        assertEquals(joker, speler.getGekozenJoker(), "Gekozen joker komt niet overeen");
     }
-}*/
+}

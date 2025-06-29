@@ -26,8 +26,6 @@ public class VraagInteractieHandler {
                 verwerkJokerVanType(speler, kamer, KeyJoker.class, "❌ Je hebt geen KeyJoker gekozen.");
                 return true;
             }
-
-
             case "gebruik boek" -> {
                 verwerkBoek(kamer);
                 return true;

@@ -1,9 +1,10 @@
-package game.command;
+package game.command.speler;
 
 import game.Speler;
+import game.command.Command;
 import game.kamer.Kamer;
 
-public class SetPositieCommand implements SpelerCommand {
+public class SetPositieCommand implements Command {
     private final Speler speler;
     private final Kamer nieuweKamer;
 
@@ -13,7 +14,7 @@ public class SetPositieCommand implements SpelerCommand {
     }
 
     @Override
-    public void execute() {
+    public void voerUit() {
         speler.setHuidigeKamer(nieuweKamer);
     }
 }

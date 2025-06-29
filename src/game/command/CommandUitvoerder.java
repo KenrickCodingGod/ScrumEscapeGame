@@ -1,7 +1,7 @@
 package game.command;
 
 public class CommandUitvoerder {
-    public static void voerUit(SpelerCommand command) {
-        command.execute();
+    public static void voerUit(Command command) {
+        command.voerUit();
     }
 }

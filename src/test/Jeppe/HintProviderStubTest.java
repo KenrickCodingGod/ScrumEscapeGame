@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class HintProviderStubTest {
 
-    // stub class die altijd dezelfde hint terug geeft
+
     static class StubHintProvider implements HintProvider {
         @Override
         public Hint geefHint() {
@@ -19,9 +19,9 @@ public class HintProviderStubTest {
     @Test
     void testStubGeeftVasteHint() {
         StubHintProvider stub = new StubHintProvider(); //  maak stub aan
-        Hint hint = stub.geefHint();//vraag de hint op
+        Hint hint = stub.geefHint();
 
-        //check of de hint precies deze tekst terug geeft
+
         assertEquals("Stub: vaste hint", hint.geefHint());
     }
 }

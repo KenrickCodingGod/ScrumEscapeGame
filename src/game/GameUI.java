@@ -28,7 +28,7 @@ public class GameUI {
 
     public void toonStatus(Speler speler, Kamer kamer, int totaalKamers) {
         System.out.println("\n--- SPELER STATUS ---");
-        System.out.println("Kamer " + (kamer.getKamerNummer()) + " van " + totaalKamers);
+        System.out.println("Kamer " + (kamer == null ? 0 : kamer.getKamerNummer()) + " van " + totaalKamers);
         System.out.println("Actieve monsters: " + speler.getMonsterNamenAlsString());
     }
 
